@@ -13,11 +13,14 @@ import PostInteract from "components/PostInteract";
 import ReplyInput from "components/ReplyInput";
 import Comment from "components/Comment";
 import { mockComments } from "model/Comment";
+import Profile from "components/Profile";
+import { mockUsers } from "model/User";
 
 const Post = () => {
   const theme = useTheme();
   const post = mockPosts[0];
   const comments = mockComments;
+  const user = mockUsers;
 
   return (
     <Box>
@@ -42,23 +45,8 @@ const Post = () => {
           alt="postImage"
         />
         <Box display={"flex"} alignItems={"flex-end"}>
-          <Box display={"flex"} alignItems={"center"} mr={"28px"}>
-            <Avatar sx={{ mr: "8px" }} />
-            <Box mr={"22px"}>
-              <Typography
-                fontSize={"20px"}
-                fontWeight={700}
-                color={theme.palette.secondary.dark}
-              >
-                {post.UserID}
-              </Typography>
-              <Typography
-                fontSize={"12px"}
-                color={theme.palette.secondary.dark}
-              >
-                20 posts
-              </Typography>
-            </Box>
+          <Box display={"flex"} alignItems={"center"}>
+            <Profile user={user}></Profile>
             <Button
               variant="contained"
               endIcon={<Favorite />}
