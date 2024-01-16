@@ -1,6 +1,7 @@
-import { Add } from "@mui/icons-material";
+import { Add, Search } from "@mui/icons-material";
 import { Box, Button, Paper, Typography, useTheme } from "@mui/material";
 import PostListItem from "components/PostListItem";
+import PostFilter from "components/PostsFilter";
 import TextInput from "components/TextInput";
 import { mockPosts } from "model/Post";
 import { mockTopics } from "model/Topic";
@@ -62,31 +63,16 @@ const Topic = () => {
         </Box>
       </Paper>
       <Box display={"flex"} gap={"12px"} mt={"18px"}>
-        <TextInput sx={{ flex: "1" }}></TextInput>
-        <Box display={"flex"}>
-          <Paper
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "140px",
-              borderRadius: "16px 0px 0px 16px",
-            }}
-          >
-            <Typography fontWeight={700}>Latest</Typography>
-          </Paper>
-          <Paper
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "140px",
-              borderRadius: "0px 16px 16px 0px",
-            }}
-          >
-            <Typography fontWeight={700}>Popular</Typography>
-          </Paper>
-        </Box>
+        <TextInput
+          sx={{ flex: "1" }}
+          placeholder="Search"
+          InputIcon={
+            <Search
+              sx={{ color: theme.palette.secondary.dark, mr: "12px" }}
+            ></Search>
+          }
+        ></TextInput>
+        <PostFilter />
       </Box>
       <Box display="flex" flexDirection="column" gap="4px" mt={"16px"}>
         {posts.map((post) => (
