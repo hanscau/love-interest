@@ -2,6 +2,7 @@ import { ThumbUp } from "@mui/icons-material";
 import { Avatar, Box, Typography, useTheme } from "@mui/material";
 import Post from "model/Post";
 import PostInteract from "./PostInteract";
+import Image from "./Image";
 
 interface PostListItemProps {
   post: Post;
@@ -20,15 +21,32 @@ const PostListItem = ({ post }: PostListItemProps) => {
         display="flex"
         flex={1}
       >
-        <Box
-          height={"100%"}
-          bgcolor={"grey"}
+        <Image
+          src=""
+          alt=""
           boxSizing={"border-box"}
-          sx={{ aspectRatio: "1/1" }}
-        >
-          <img src="" alt="" />
+          bgcolor={"grey"}
+          height={"100%"}
+          sx={{
+            aspectRatio: "1/1",
+          }}
+        ></Image>
+        <Box alignItems={"center"}>
+          <Typography
+            fontWeight={700}
+            sx={{ color: theme.palette.secondary.dark }}
+          >
+            {post.Title}
+          </Typography>
+          <Typography
+            fontSize={"12px"}
+            mb={"10px"}
+            sx={{ color: theme.palette.secondary.dark }}
+          >
+            {post.TopicID} / {post.DateCreated.toDateString()}
+          </Typography>
+          <PostInteract post={post}></PostInteract>
         </Box>
-        <PostInteract post={post}></PostInteract>
       </Box>
     </Box>
   );

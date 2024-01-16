@@ -11,16 +11,6 @@ const PostInteract = ({ post }: PostInteractProps) => {
   const theme = useTheme();
   return (
     <Box>
-      <Typography fontWeight={700} sx={{ color: theme.palette.secondary.dark }}>
-        {post.Title}
-      </Typography>
-      <Typography
-        fontSize={"12px"}
-        mb={"10px"}
-        sx={{ color: theme.palette.secondary.dark }}
-      >
-        {post.TopicID} / {post.DateCreated.toDateString()}
-      </Typography>
       <Box display={"flex"} alignItems={"center"}>
         <ThumbUp
           sx={{
