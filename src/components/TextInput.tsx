@@ -1,7 +1,12 @@
-import { Search } from "@mui/icons-material";
 import { InputBase, Paper, PaperProps, useTheme } from "@mui/material";
+import React from "react";
 
-const SearchBar = ({ sx = [] }: PaperProps) => {
+interface TextInputProps extends PaperProps {
+  placeholder?: string;
+  InputIcon?: React.ReactNode;
+}
+
+const TextInput = ({ placeholder, InputIcon, sx = [] }: TextInputProps) => {
   const theme = useTheme();
   return (
     <Paper
@@ -16,9 +21,9 @@ const SearchBar = ({ sx = [] }: PaperProps) => {
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
     >
-      <Search sx={{ color: theme.palette.secondary.dark, mr: "8px" }}></Search>
+      {InputIcon}
       <InputBase
-        placeholder="Search"
+        placeholder={placeholder}
         sx={{ fontWeight: 700, color: theme.palette.secondary.dark }}
         fullWidth
       ></InputBase>
@@ -26,4 +31,4 @@ const SearchBar = ({ sx = [] }: PaperProps) => {
   );
 };
 
-export default SearchBar;
+export default TextInput;

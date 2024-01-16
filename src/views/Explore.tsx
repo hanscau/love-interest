@@ -1,3 +1,4 @@
+import { Search } from "@mui/icons-material";
 import {
   Box,
   Grid,
@@ -6,7 +7,7 @@ import {
   useTheme,
 } from "@mui/material";
 import PostListItem from "components/PostListItem";
-import SearchBar from "components/SearchBar";
+import TextInput from "components/TextInput";
 import { mockPosts } from "model/Post";
 import Topic, { mockTopics } from "model/Topic";
 
@@ -76,7 +77,13 @@ const Explore = () => {
 
   return (
     <Box sx={{ flex: 1 }}>
-      <SearchBar sx={{ mt: "8px" }}></SearchBar>
+      <TextInput
+        InputIcon={
+          <Search sx={{ color: theme.palette.secondary.dark, mr: "8px" }} />
+        }
+        sx={{ mt: "8px" }}
+        placeholder="Search"
+      ></TextInput>
       <Header mt={"24px"}>Interest</Header>
       <Grid mt="0px" container spacing={2}>
         {topics.map((topic) => (

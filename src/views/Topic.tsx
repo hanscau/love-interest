@@ -1,7 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Paper, Typography, useTheme } from "@mui/material";
 import PostListItem from "components/PostListItem";
-import SearchBar from "components/SearchBar";
+import TextInput from "components/TextInput";
 import { mockPosts } from "model/Post";
 import { mockTopics } from "model/Topic";
 import { useParams } from "react-router-dom";
@@ -62,7 +62,7 @@ const Topic = () => {
         </Box>
       </Paper>
       <Box display={"flex"} gap={"12px"} mt={"18px"}>
-        <SearchBar sx={{ flex: "1" }}></SearchBar>
+        <TextInput sx={{ flex: "1" }}></TextInput>
         <Box display={"flex"}>
           <Paper
             sx={{
