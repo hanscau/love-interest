@@ -14,7 +14,7 @@ const PostInteract = ({ post }: PostInteractProps) => {
     <Box>
       <Box display={"flex"} alignItems={"center"}>
         <LikeInteract
-          fontSize="16px"
+          fontSize="14px"
           iconSize="16px"
           like={post.LikeCount}
         ></LikeInteract>
