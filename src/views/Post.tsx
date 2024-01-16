@@ -1,0 +1,90 @@
+import {
+  Avatar,
+  Box,
+  Button,
+  Paper,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import { mockPosts } from "model/Post";
+import Image from "components/Image";
+import { Favorite } from "@mui/icons-material";
+import PostInteract from "components/PostInteract";
+import ReplyInput from "components/ReplyInput";
+import Comment from "components/Comment";
+import { mockComments } from "model/Comment";
+
+const Post = () => {
+  const theme = useTheme();
+  const post = mockPosts[0];
+  const comments = mockComments;
+
+  return (
+    <Box>
+      <Paper sx={{ p: "22px", mb: "25px" }}>
+        <Typography
+          fontWeight={700}
+          fontSize={"20px"}
+          color={theme.palette.secondary.dark}
+        >
+          {post.Title}
+        </Typography>
+        <Typography
+          mb={"22px"}
+          fontSize={"12px"}
+          color={theme.palette.secondary.dark}
+        >
+          {post.TopicID} | {post.DateCreated.toISOString()}
+        </Typography>
+        <Image
+          sx={{ mb: "22px" }}
+          src="https://picsum.photos/id/20/1080/600"
+          alt="postImage"
+        />
+        <Box display={"flex"} alignItems={"flex-end"}>
+          <Box display={"flex"} alignItems={"center"} mr={"28px"}>
+            <Avatar sx={{ mr: "8px" }} />
+            <Box mr={"22px"}>
+              <Typography
+                fontSize={"20px"}
+                fontWeight={700}
+                color={theme.palette.secondary.dark}
+              >
+                {post.UserID}
+              </Typography>
+              <Typography
+                fontSize={"12px"}
+                color={theme.palette.secondary.dark}
+              >
+                20 posts
+              </Typography>
+            </Box>
+            <Button
+              variant="contained"
+              endIcon={<Favorite />}
+              sx={{
+                background: theme.palette.primary.light,
+              }}
+            >
+              Show Interest
+            </Button>
+          </Box>
+          <Box sx={{ flex: "1 1 auto" }}></Box>
+          <PostInteract post={post}></PostInteract>
+        </Box>
+      </Paper>
+      <ReplyInput mb={"22px"}></ReplyInput>
+      {comments.map((comment) => (
+        <Box pb={"22px"}>
+          <Comment comment={comment}></Comment>
+          {comment.Replies.map((reply) => (
+            <Comment comment={reply} ml={"64px"} reply></Comment>
+          ))}
+          <ReplyInput ml={"64px"}></ReplyInput>
+        </Box>
+      ))}
+    </Box>
+  );
+};
+
+export default Post;
