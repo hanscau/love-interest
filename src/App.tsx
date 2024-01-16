@@ -5,7 +5,7 @@ import MainAppBar from "components/MainAppBar";
 
 function App() {
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ pb: "64px" }}>
       <MainAppBar />
       <Routes />
     </Container>

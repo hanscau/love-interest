@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+html {
+  background-color: #f8f8f8;
+}
+
 #root {
   background-color: #f8f8f8;
 }
