@@ -1,4 +1,4 @@
-import { InputBase, Paper, PaperProps, useTheme } from "@mui/material";
+import { Box, InputBase, Paper, PaperProps, useTheme } from "@mui/material";
 import React from "react";
 
 interface TextInputProps extends PaperProps {
@@ -21,7 +21,7 @@ const TextInput = ({ placeholder, InputIcon, sx = [] }: TextInputProps) => {
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
     >
-      {InputIcon}
+      {InputIcon ? InputIcon : <Box sx={{ width: "8px" }}></Box>}
       <InputBase
         placeholder={placeholder}
         sx={{ fontWeight: 700, color: theme.palette.secondary.dark }}
