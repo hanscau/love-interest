@@ -1,3 +1,4 @@
+import { Image } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -7,6 +8,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import ImageInput from "components/ImageInput";
 import ParagraphInput from "components/ParagraphInput";
 import Tag from "components/Tag";
 import TextInput from "components/TextInput";
@@ -69,24 +71,7 @@ const CreatePost = () => {
                 sx={{ borderRadius: "0px 16px 16px 16px" }}
               />
             ) : (
-              <Paper
-                sx={{
-                  height: "255px",
-                  borderRadius: "0px 16px 16px 16px",
-                  p: "8px 17px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Typography
-                  color={theme.palette.secondary.dark}
-                  fontWeight={700}
-                  fontSize={"28px"}
-                >
-                  Upload an Image
-                </Typography>
-              </Paper>
+              <ImageInput sx={{ borderRadius: "0px 16px 16px 16px" }} />
             )}
           </Box>
           <Box
