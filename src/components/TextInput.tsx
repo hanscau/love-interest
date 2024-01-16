@@ -4,9 +4,15 @@ import React from "react";
 interface TextInputProps extends PaperProps {
   placeholder?: string;
   InputIcon?: React.ReactNode;
+  bold?: boolean;
 }
 
-const TextInput = ({ placeholder, InputIcon, sx = [] }: TextInputProps) => {
+const TextInput = ({
+  bold,
+  placeholder,
+  InputIcon,
+  sx = [],
+}: TextInputProps) => {
   const theme = useTheme();
   return (
     <Paper
@@ -24,7 +30,7 @@ const TextInput = ({ placeholder, InputIcon, sx = [] }: TextInputProps) => {
       {InputIcon ? InputIcon : <Box sx={{ width: "8px" }}></Box>}
       <InputBase
         placeholder={placeholder}
-        sx={{ fontWeight: 700, color: theme.palette.secondary.dark }}
+        sx={{ fontWeight: bold ? 700 : 0, color: theme.palette.secondary.dark }}
         fullWidth
       ></InputBase>
     </Paper>

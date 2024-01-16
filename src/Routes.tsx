@@ -1,4 +1,5 @@
 import { useRoutes } from "react-router-dom";
+import CreatePost from "views/CreatePost";
 import Explore from "views/Explore";
 import Post from "views/Post";
 import Topic from "views/Topic";
@@ -10,6 +11,7 @@ export default function Routes() {
     { path: "/topic/:topicID", element: <Topic /> },
     { path: "/post/:postID", element: <Post /> },
     { path: "/user/:userID", element: <User /> },
+    { path: "/post/create", element: <CreatePost /> },
   ]);
   return routes;
 }
