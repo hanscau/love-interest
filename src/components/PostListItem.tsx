@@ -22,7 +22,7 @@ const PostListItem = ({ post }: PostListItemProps) => {
         flex={1}
       >
         <Image
-          src=""
+          src={post.ImageURL}
           alt=""
           boxSizing={"border-box"}
           bgcolor={"grey"}
@@ -43,7 +43,7 @@ const PostListItem = ({ post }: PostListItemProps) => {
             mb={"10px"}
             sx={{ color: theme.palette.secondary.dark }}
           >
-            {post.TopicID} / {post.DateCreated.toDateString()}
+            {post.TopicID} / {post.created_at}
           </Typography>
           <PostInteract post={post}></PostInteract>
         </Box>

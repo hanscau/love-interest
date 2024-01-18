@@ -37,7 +37,7 @@ const Post = () => {
           fontSize={"12px"}
           color={theme.palette.secondary.dark}
         >
-          {post.TopicID} | {post.DateCreated.toISOString()}
+          {post.TopicID} | {post.created_at}
         </Typography>
         <Image
           sx={{ mb: "22px" }}

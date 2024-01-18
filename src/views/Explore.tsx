@@ -8,8 +8,11 @@ import {
 } from "@mui/material";
 import PostListItem from "components/PostListItem";
 import TextInput from "components/TextInput";
+import { fetchPosts, selectAllPosts } from "features/posts/postsSlice";
 import { mockPosts } from "model/Post";
 import Topic, { mockTopics } from "model/Topic";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "reduxHooks";
 
 const Header = (props: TypographyProps) => {
   const theme = useTheme();
@@ -71,9 +74,21 @@ const TopicListItem = ({ topic }: { topic: Topic }) => {
 
 const Explore = () => {
   const theme = useTheme();
+  const dispatch = useAppDispatch();
+  const posts = useAppSelector(selectAllPosts);
+
+  const postsStatus = useAppSelector((state) => state.posts.status);
+
+  useEffect(() => {
+    console.log("called multilple times");
+    if (postsStatus === "idle") {
+      console.log("called twice");
+      dispatch(fetchPosts());
+    }
+  }, [postsStatus, dispatch]);
 
   const topics = mockTopics;
-  const posts = mockPosts;
+  // const posts = mockPosts;
 
   return (
     <Box sx={{ flex: 1 }}>

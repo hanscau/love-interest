@@ -17,7 +17,7 @@ const MainAppBar = ({ openLoginModal }: MainAppBarProps) => {
             variant="contained"
             endIcon={<Add />}
             sx={{
-              background: theme.palette.primary.light,
+              background: theme.palette.secondary.light,
             }}
           >
             Share
