@@ -8,10 +8,10 @@ import User from "views/User";
 export default function Routes() {
   const routes = useRoutes([
     { path: "/", element: <Explore /> },
-    { path: "/topic/:topicID", element: <Topic /> },
-    { path: "/post/:postID", element: <Post /> },
-    { path: "/user/:userID", element: <User /> },
     { path: "/post/create", element: <CreatePost /> },
+    { path: "/post/:postID", element: <Post /> },
+    { path: "/topic/:topicID", element: <Topic /> },
+    { path: "/user/:userID", element: <User /> },
   ]);
   return routes;
 }

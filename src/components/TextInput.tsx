@@ -5,12 +5,14 @@ interface TextInputProps extends PaperProps {
   placeholder?: string;
   InputIcon?: React.ReactNode;
   bold?: boolean;
+  type?: string;
 }
 
 const TextInput = ({
   bold,
   placeholder,
   InputIcon,
+  type,
   sx = [],
 }: TextInputProps) => {
   const theme = useTheme();
@@ -31,6 +33,7 @@ const TextInput = ({
       <InputBase
         placeholder={placeholder}
         sx={{ fontWeight: bold ? 700 : 0, color: theme.palette.secondary.dark }}
+        type={type ? type : "text"}
         fullWidth
       ></InputBase>
     </Paper>

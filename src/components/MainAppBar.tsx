@@ -2,7 +2,11 @@ import { Add, Loyalty } from "@mui/icons-material";
 import { AppBar, Avatar, Box, Button, Toolbar, useTheme } from "@mui/material";
 import Logo from "./Logo";
 
-const MainAppBar = () => {
+interface MainAppBarProps {
+  openLoginModal: () => void;
+}
+
+const MainAppBar = ({ openLoginModal }: MainAppBarProps) => {
   const theme = useTheme();
   return (
     <AppBar position="static" color="transparent" sx={{ boxShadow: "none" }}>
@@ -19,7 +23,7 @@ const MainAppBar = () => {
             Share
           </Button>
           <Loyalty fontSize="large" sx={{ color: "#CCABFF" }}></Loyalty>
-          <Avatar></Avatar>
+          <Avatar onClick={() => openLoginModal()}></Avatar>
         </Box>
       </Toolbar>
     </AppBar>
