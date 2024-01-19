@@ -81,8 +81,8 @@ const UserPage = () => {
         <PostFilter />
       </Box>
       <Box display="flex" flexDirection="column" gap="4px" mt={"16px"}>
-        {posts.map((post) => (
-          <PostListItem post={post}></PostListItem>
+        {posts.map((post, i) => (
+          <PostListItem post={post} key={i}></PostListItem>
         ))}
       </Box>
     </Box>
