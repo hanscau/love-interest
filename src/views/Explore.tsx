@@ -103,8 +103,8 @@ const Explore = () => {
       ></TextInput>
       <Header mt={"24px"}>Interest</Header>
       <Grid mt="0px" container spacing={2}>
-        {topics.map((topic) => (
-          <TopicListItem topic={topic} key={topic.topicID} />
+        {topics.map((topic, i) => (
+          <TopicListItem topic={topic} key={i} />
         ))}
       </Grid>
       <Header mt={"24px"} mb={"16px"}>
