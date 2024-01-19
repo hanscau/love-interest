@@ -1,6 +1,9 @@
 import { Add, Loyalty } from "@mui/icons-material";
 import { AppBar, Avatar, Box, Button, Toolbar, useTheme } from "@mui/material";
 import Logo from "./Logo";
+import { useAppSelector } from "reduxHooks";
+import { getCurrentUser } from "features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 interface MainAppBarProps {
   openLoginModal: () => void;
@@ -8,6 +11,17 @@ interface MainAppBarProps {
 
 const MainAppBar = ({ openLoginModal }: MainAppBarProps) => {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const user = useAppSelector(getCurrentUser);
+
+  const onProfileClick = () => {
+    if (user === null) {
+      openLoginModal();
+    } else {
+      navigate(`/user/${user.userID}`);
+    }
+  };
+
   return (
     <AppBar position="static" color="transparent" sx={{ boxShadow: "none" }}>
       <Toolbar disableGutters>
@@ -23,7 +37,7 @@ const MainAppBar = ({ openLoginModal }: MainAppBarProps) => {
             Share
           </Button>
           <Loyalty fontSize="large" sx={{ color: "#CCABFF" }}></Loyalty>
-          <Avatar onClick={() => openLoginModal()}></Avatar>
+          <Avatar onClick={() => onProfileClick()}></Avatar>
         </Box>
       </Toolbar>
     </AppBar>
