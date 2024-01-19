@@ -34,13 +34,15 @@ const UserPage = () => {
       .get(`${API_URL}/users/${userID}`)
       .then((res) => {
         const navUser = res.data.data;
-        console.log(navUser);
         setNavigatedUser(navUser);
-        if (currentUser && navUser.userID === currentUser.id) {
+        if (currentUser && navUser.id === currentUser.id) {
           setIsCurrentUser(true);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        navigate("/");
+      });
   }, [userID, currentUser]);
 
   return (
