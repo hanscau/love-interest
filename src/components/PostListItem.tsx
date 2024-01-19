@@ -6,12 +6,13 @@ import Image from "./Image";
 
 interface PostListItemProps {
   post: Post;
+  onClick?: () => void;
 }
 
-const PostListItem = ({ post }: PostListItemProps) => {
+const PostListItem = ({ post, onClick }: PostListItemProps) => {
   const theme = useTheme();
   return (
-    <Box display={"flex"} gap="16px">
+    <Box display={"flex"} gap="16px" onClick={onClick}>
       <Avatar></Avatar>
       <Box
         bgcolor={"white"}

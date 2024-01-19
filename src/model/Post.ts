@@ -1,5 +1,5 @@
 export default interface Post {
-  postID: number;
+  id: number;
   userID: number;
   topicID: number;
   title: string;
@@ -20,7 +20,7 @@ export enum ContentType {
 }
 
 export const emptyPost: Post = {
-  postID: 0,
+  id: 0,
   userID: 0,
   topicID: 0,
   title: "",
