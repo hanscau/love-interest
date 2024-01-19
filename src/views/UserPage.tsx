@@ -48,7 +48,7 @@ const UserPage = () => {
   return (
     <Box>
       <Paper sx={{ p: "22px", borderRadius: "16px", mb: "22px" }}>
-        <Box display={"flex"} alignItems={"center"} mb={"16px"}>
+        <Box display={"flex"} alignItems={"center"}>
           <Profile user={navigatedUser}></Profile>
           <Box sx={{ flex: "1 1 auto" }}></Box>
           {isCurrentUser ? (
@@ -68,7 +68,9 @@ const UserPage = () => {
             </Button>
           )}
         </Box>
-        <Typography>{navigatedUser?.bio}</Typography>
+        {navigatedUser?.bio && (
+          <Typography mt={"16px"}>{navigatedUser.bio}</Typography>
+        )}
       </Paper>
       <Box display={"flex"} gap={"12px"} mb={"22px"}>
         <TextInput
