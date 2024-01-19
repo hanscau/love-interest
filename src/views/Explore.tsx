@@ -76,13 +76,11 @@ const Explore = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const posts = useAppSelector(selectAllPosts);
-
+  console.log(posts);
   const postsStatus = useAppSelector((state) => state.posts.status);
 
   useEffect(() => {
-    console.log("called multilple times");
     if (postsStatus === "idle") {
-      console.log("called twice");
       dispatch(fetchPosts());
     }
   }, [postsStatus, dispatch]);
@@ -102,15 +100,15 @@ const Explore = () => {
       <Header mt={"24px"}>Interest</Header>
       <Grid mt="0px" container spacing={2}>
         {topics.map((topic) => (
-          <TopicListItem topic={topic} />
+          <TopicListItem topic={topic} key={topic.TopicID} />
         ))}
       </Grid>
       <Header mt={"24px"} mb={"16px"}>
         Recent
       </Header>
       <Box display="flex" flexDirection="column" gap="4px">
-        {posts.map((post) => (
-          <PostListItem post={post}></PostListItem>
+        {posts.map((post, i) => (
+          <PostListItem post={post} key={i}></PostListItem>
         ))}
       </Box>
     </Box>
