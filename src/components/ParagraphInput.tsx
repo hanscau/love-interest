@@ -2,9 +2,16 @@ import { InputBase, Paper, PaperProps, useTheme } from "@mui/material";
 
 interface ParagraphInputProps extends PaperProps {
   placeholder?: string;
+  value: string;
+  onChange: (e: any) => void;
 }
 
-const ParagraphInput = ({ placeholder, sx }: ParagraphInputProps) => {
+const ParagraphInput = ({
+  value,
+  onChange,
+  placeholder,
+  sx,
+}: ParagraphInputProps) => {
   const theme = useTheme();
   return (
     <Paper
@@ -23,6 +30,8 @@ const ParagraphInput = ({ placeholder, sx }: ParagraphInputProps) => {
         placeholder={placeholder}
         sx={{ color: theme.palette.secondary.dark }}
         multiline
+        value={value}
+        onChange={onChange}
         minRows={10}
         maxRows={17}
         fullWidth

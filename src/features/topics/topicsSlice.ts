@@ -62,4 +62,4 @@ export const selectAllTopics = (state: { topics: TopicsState }) =>
 export const selectTopicById = (
   state: { topic: TopicsState },
   topicID: number
-) => state.topic.topics.find((topic: Topic) => topic.topicID === topicID);
+) => state.topic.topics.find((topic: Topic) => topic.id === topicID);

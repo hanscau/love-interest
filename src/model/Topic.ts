@@ -1,5 +1,5 @@
 export default interface Topic {
-  topicID: number;
+  id: number;
   topic: string;
   topicImageURL: string;
   topicPosts: number;
@@ -7,56 +7,56 @@ export default interface Topic {
 }
 export const mockTopics: Topic[] = [
   {
-    topicID: 1,
+    id: 1,
     topic: "Technology",
     topicImageURL: "https://example.com/technology.jpg",
     topicPosts: 10,
     created_at: new Date().toISOString(),
   },
   {
-    topicID: 2,
+    id: 2,
     topic: "Sports",
     topicImageURL: "https://example.com/sports.jpg",
     topicPosts: 5,
     created_at: new Date().toISOString(),
   },
   {
-    topicID: 3,
+    id: 3,
     topic: "Movies",
     topicImageURL: "https://example.com/movies.jpg",
     topicPosts: 8,
     created_at: new Date().toISOString(),
   },
   {
-    topicID: 4,
+    id: 4,
     topic: "Food",
     topicImageURL: "https://example.com/food.jpg",
     topicPosts: 3,
     created_at: new Date().toISOString(),
   },
   {
-    topicID: 5,
+    id: 5,
     topic: "Travel",
     topicImageURL: "https://example.com/travel.jpg",
     topicPosts: 12,
     created_at: new Date().toISOString(),
   },
   {
-    topicID: 6,
+    id: 6,
     topic: "Books",
     topicImageURL: "https://example.com/books.jpg",
     topicPosts: 7,
     created_at: new Date().toISOString(),
   },
   {
-    topicID: 7,
+    id: 7,
     topic: "Music",
     topicImageURL: "https://example.com/music.jpg",
     topicPosts: 9,
     created_at: new Date().toISOString(),
   },
   {
-    topicID: 8,
+    id: 8,
     topic: "Fashion",
     topicImageURL: "https://example.com/fashion.jpg",
     topicPosts: 4,

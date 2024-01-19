@@ -18,3 +18,18 @@ export enum ContentType {
   IMAGE = 1,
   VIDEO = 2,
 }
+
+export const emptyPost: Post = {
+  postID: 0,
+  userID: 0,
+  topicID: 0,
+  title: "",
+  topic: "",
+  tags: "",
+  content: "",
+  contentType: ContentType.TEXT,
+  contentImageURL: "",
+  profileImageURL: "",
+  postLikes: 0,
+  created_at: "",
+};

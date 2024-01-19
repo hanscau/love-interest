@@ -8,6 +8,7 @@ interface TextInputProps extends PaperProps {
   type?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onEnter?: () => void;
 }
 
 const TextInput = ({
@@ -17,12 +18,13 @@ const TextInput = ({
   type,
   value,
   onChange,
+  onEnter,
   sx = [],
 }: TextInputProps) => {
   const theme = useTheme();
   return (
     <Paper
-      component="form"
+      component="div"
       sx={[
         {
           p: "8px 12px",
@@ -40,6 +42,11 @@ const TextInput = ({
         type={type ? type : "text"}
         value={value}
         onChange={onChange}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            onEnter && onEnter();
+          }
+        }}
         fullWidth
       ></InputBase>
     </Paper>
