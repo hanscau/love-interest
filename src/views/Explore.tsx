@@ -78,7 +78,6 @@ const Explore = () => {
 
   const posts = useAppSelector(selectAllPosts);
   const topics = useAppSelector(selectAllTopics);
-  console.log(topics);
   const postsStatus = useAppSelector((state) => state.posts.status);
   const topicsStatus = useAppSelector((state) => state.topics.status);
 

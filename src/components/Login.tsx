@@ -2,6 +2,10 @@ import { Box, Button, Modal, Paper, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 import TextInput from "./TextInput";
 import { AccountCircle, Password, Person } from "@mui/icons-material";
+import axios from "axios";
+import { useAppDispatch } from "reduxHooks";
+import User from "model/User";
+import { login } from "features/user/userSlice";
 
 interface LoginProps {
   isOpen: boolean;
@@ -9,8 +13,26 @@ interface LoginProps {
 }
 
 const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
+  const dispatch = useAppDispatch();
   const theme = useTheme();
   const [isRegister, setIsRegister] = useState(false);
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const submitLogin = () => {
+    axios
+      .post("http://localhost:3001/auth/login", { username, password })
+      .then((res) => {
+        const { token, user }: { token: string; user: User } = res.data;
+        dispatch(login({ jwt: token, ...user }));
+        closeLoginModal();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {});
+  };
 
   const close = () => {
     closeLoginModal();
@@ -53,6 +75,8 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
         >
           <TextInput
             placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             InputIcon={
               <AccountCircle
                 sx={{ color: theme.palette.secondary.dark, mr: "12px" }}
@@ -75,6 +99,8 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
           <TextInput
             placeholder="Password"
             type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             InputIcon={
               <Password
                 sx={{ color: theme.palette.secondary.dark, mr: "12px" }}
@@ -100,6 +126,7 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
           <Button
             variant="contained"
             size="large"
+            onClick={() => submitLogin()}
             sx={{ background: theme.palette.primary.light }}
           >
             Login
