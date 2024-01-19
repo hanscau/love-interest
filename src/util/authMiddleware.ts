@@ -11,5 +11,6 @@ authMiddleware.startListening({
 
 export const getSaveUserData = () => {
   const savedUserData = localStorage.getItem("savedUserData");
+  if (savedUserData === "undefined") return null;
   return savedUserData ? JSON.parse(savedUserData) : null;
 };
