@@ -6,6 +6,7 @@ import axios from "axios";
 import { useAppDispatch } from "reduxHooks";
 import User from "model/User";
 import { login } from "features/user/userSlice";
+import { API_URL } from "util/url";
 
 interface LoginProps {
   isOpen: boolean;
@@ -19,10 +20,30 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const submitLogin = () => {
+  const onLogin = () => {
     axios
-      .post("http://localhost:3001/auth/login", { username, password })
+      .post(`${API_URL}/auth/login`, { username, password })
+      .then((res) => {
+        const { token, user }: { token: string; user: User } = res.data;
+        dispatch(login({ jwt: token, ...user }));
+        closeLoginModal();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {});
+  };
+
+  const onRegister = () => {
+    if (!isRegister) setIsRegister(true);
+    if (firstName == "" || lastName == "" || username == "" || password == "")
+      return;
+    axios
+      .post(`${API_URL}/users`, { firstName, lastName, username, password })
       .then((res) => {
         const { token, user }: { token: string; user: User } = res.data;
         dispatch(login({ jwt: token, ...user }));
@@ -87,13 +108,19 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
             <Box display={"flex"} gap={"12px"} mb={"16px"}>
               <TextInput
                 placeholder="First Name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 InputIcon={
                   <Person
                     sx={{ color: theme.palette.secondary.dark, mr: "12px" }}
                   />
                 }
               ></TextInput>
-              <TextInput placeholder="Last Name"></TextInput>
+              <TextInput
+                placeholder="Last Name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              ></TextInput>
             </Box>
           )}
           <TextInput
@@ -111,6 +138,13 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
             <TextInput
               placeholder="Confirm Password"
               type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              InputIcon={
+                <Password
+                  sx={{ color: theme.palette.secondary.dark, mr: "12px" }}
+                />
+              }
             ></TextInput>
           )}
         </Box>
@@ -118,19 +152,21 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
           <Button
             variant="contained"
             size="large"
-            onClick={() => setIsRegister(true)}
+            onClick={() => onRegister()}
             sx={{ background: theme.palette.secondary.light }}
           >
             Register
           </Button>
-          <Button
-            variant="contained"
-            size="large"
-            onClick={() => submitLogin()}
-            sx={{ background: theme.palette.primary.light }}
-          >
-            Login
-          </Button>
+          {!isRegister && (
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => onLogin()}
+              sx={{ background: theme.palette.primary.light }}
+            >
+              Login
+            </Button>
+          )}
         </Box>
       </Box>
     </Modal>
