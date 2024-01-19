@@ -7,7 +7,7 @@ import Profile from "components/Profile";
 import TextInput from "components/TextInput";
 import { selectAllPosts } from "features/posts/postsSlice";
 import { getCurrentUser, logout } from "features/user/userSlice";
-import User, { mockUsers } from "model/User";
+import User, { emptyUser, mockUsers } from "model/User";
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "reduxHooks";
@@ -21,7 +21,7 @@ const UserPage = () => {
   const posts = useAppSelector(selectAllPosts);
   const currentUser = useAppSelector(getCurrentUser);
 
-  const [navigatedUser, setNavigatedUser] = useState<User | null>(null);
+  const [navigatedUser, setNavigatedUser] = useState<User>(emptyUser);
   const [isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
 
   const onLogout = () => {
@@ -49,7 +49,11 @@ const UserPage = () => {
     <Box>
       <Paper sx={{ p: "22px", borderRadius: "16px", mb: "22px" }}>
         <Box display={"flex"} alignItems={"center"}>
-          <Profile user={navigatedUser}></Profile>
+          <Profile
+            firstName={navigatedUser?.firstName}
+            lastName={navigatedUser?.lastName}
+            imageURL={navigatedUser?.profileImageURL}
+          ></Profile>
           <Box sx={{ flex: "1 1 auto" }}></Box>
           {isCurrentUser ? (
             <Button

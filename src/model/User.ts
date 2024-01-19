@@ -29,3 +29,16 @@ export const mockUsers: User = {
   profileImageURL: "https://picsum.photos/200/300",
   bio: "I am a software developer.",
 };
+
+export const emptyUser: User = {
+  id: 0,
+  firstName: "",
+  lastName: "",
+  username: "",
+  gender: Gender.MALE,
+  phoneNo: "",
+  userPosts: 0,
+  created_at: "",
+  profileImageURL: "",
+  bio: "",
+};

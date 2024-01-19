@@ -73,7 +73,11 @@ const PostPage = () => {
         )}
         <Box display={"flex"} alignItems={"flex-end"}>
           <Box display={"flex"} alignItems={"center"}>
-            <Profile user={user}></Profile>
+            <Profile
+              firstName={post.firstName}
+              lastName={post.lastName}
+              imageURL={post.profileImageURL}
+            ></Profile>
             <Button
               variant="contained"
               endIcon={<Favorite />}

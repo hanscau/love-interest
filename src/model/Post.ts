@@ -8,6 +8,8 @@ export default interface Post {
   content: string;
   contentType: ContentType;
   contentImageURL: string;
+  firstName: string;
+  lastName: string;
   profileImageURL: string;
   postLikes: number;
   created_at: string;
@@ -29,6 +31,8 @@ export const emptyPost: Post = {
   content: "",
   contentType: ContentType.TEXT,
   contentImageURL: "",
+  firstName: "",
+  lastName: "",
   profileImageURL: "",
   postLikes: 0,
   created_at: "",
