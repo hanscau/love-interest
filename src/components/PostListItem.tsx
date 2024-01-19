@@ -1,6 +1,6 @@
 import { ThumbUp } from "@mui/icons-material";
 import { Avatar, Box, Typography, useTheme } from "@mui/material";
-import Post from "model/Post";
+import Post, { ContentType } from "model/Post";
 import PostInteract from "./PostInteract";
 import Image from "./Image";
 
@@ -21,16 +21,17 @@ const PostListItem = ({ post }: PostListItemProps) => {
         display="flex"
         flex={1}
       >
-        <Image
-          src={post.contentImageURL}
-          alt=""
-          boxSizing={"border-box"}
-          bgcolor={"grey"}
-          height={"100%"}
-          sx={{
-            aspectRatio: "1/1",
-          }}
-        ></Image>
+        {post.contentType === ContentType.IMAGE && (
+          <Box
+            sx={{
+              background: `url("${post.contentImageURL}")`,
+              backgroundSize: "cover",
+              aspectRatio: "1/1",
+              height: "100%",
+            }}
+          ></Box>
+        )}
+
         <Box alignItems={"center"}>
           <Typography
             fontWeight={700}
