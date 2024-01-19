@@ -6,7 +6,6 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { mockPosts } from "model/Post";
 import Image from "components/Image";
 import { Favorite } from "@mui/icons-material";
 import PostInteract from "components/PostInteract";
@@ -15,10 +14,12 @@ import Comment from "components/Comment";
 import { mockComments } from "model/Comment";
 import Profile from "components/Profile";
 import { mockUsers } from "model/User";
+import { useAppSelector } from "reduxHooks";
+import { selectAllPosts } from "features/posts/postsSlice";
 
 const Post = () => {
   const theme = useTheme();
-  const post = mockPosts[0];
+  const post = useAppSelector(selectAllPosts)[0];
   const comments = mockComments;
   const user = mockUsers;
 
@@ -30,14 +31,14 @@ const Post = () => {
           fontSize={"20px"}
           color={theme.palette.secondary.dark}
         >
-          {post.Title}
+          {post.title}
         </Typography>
         <Typography
           mb={"22px"}
           fontSize={"12px"}
           color={theme.palette.secondary.dark}
         >
-          {post.TopicID} | {post.created_at}
+          {post.topicID} | {post.created_at}
         </Typography>
         <Image
           sx={{ mb: "22px" }}

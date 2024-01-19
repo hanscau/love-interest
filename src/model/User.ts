@@ -1,17 +1,28 @@
 export default interface User {
-    UserID: number;
-    FirstName: string;
-    LastName: string;
-    DateCreated: Date;
-    ProfilePicture: string;
-    Bio: string;
+  userID: number;
+  firstName: string;
+  lastName: string;
+  bio: string;
+  gender: Gender;
+  phoneNo: string;
+  userPosts: number;
+  profileImageURL: string;
+  created_at: string;
+}
+
+export enum Gender {
+  MALE = 0,
+  FEMALE = 1,
 }
 
 export const mockUsers: User = {
-    UserID: 1,
-    FirstName: "John",
-    LastName: "Doe",
-    DateCreated: new Date(),
-    ProfilePicture: "https://picsum.photos/200/300",
-    Bio: "I am a software developer."
-}
+  userID: 1,
+  firstName: "John",
+  lastName: "Doe",
+  gender: Gender.MALE,
+  phoneNo: "1234567890",
+  userPosts: 0,
+  created_at: new Date().toISOString(),
+  profileImageURL: "https://picsum.photos/200/300",
+  bio: "I am a software developer.",
+};

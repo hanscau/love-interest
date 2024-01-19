@@ -16,10 +16,10 @@ const PostInteract = ({ post }: PostInteractProps) => {
         <LikeInteract
           fontSize="14px"
           iconSize="16px"
-          like={post.LikeCount}
+          like={post.postLikes}
         ></LikeInteract>
         <Box display={"flex"}>
-          {post.Tags.split("#").map((tag, i) => (
+          {post.tags.split("#").map((tag, i) => (
             <Tag tag={tag} key={i}></Tag>
           ))}
         </Box>

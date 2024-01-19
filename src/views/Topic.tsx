@@ -3,9 +3,10 @@ import { Box, Button, Paper, Typography, useTheme } from "@mui/material";
 import PostListItem from "components/PostListItem";
 import PostFilter from "components/PostsFilter";
 import TextInput from "components/TextInput";
-import { mockPosts } from "model/Post";
+import { selectAllPosts } from "features/posts/postsSlice";
 import { mockTopics } from "model/Topic";
 import { useParams } from "react-router-dom";
+import { useAppSelector } from "reduxHooks";
 
 const Topic = () => {
   const theme = useTheme();
@@ -13,7 +14,7 @@ const Topic = () => {
   console.log(params.topicID);
 
   const topic = mockTopics[0];
-  const posts = mockPosts;
+  const posts = useAppSelector(selectAllPosts);
 
   return (
     <Box flex={1}>
@@ -52,10 +53,10 @@ const Topic = () => {
             fontWeight={700}
             mr={"8px"}
           >
-            {topic.Name}
+            {topic.topic}
           </Typography>
           <Typography color={"white"} fontSize={"12px"} flex={1}>
-            {topic.PostCount} posts
+            {topic.topicPosts} posts
           </Typography>
           <Button variant="contained" endIcon={<Add />} color="secondary">
             Post in Pottery

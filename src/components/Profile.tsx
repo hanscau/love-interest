@@ -18,7 +18,7 @@ const Profile = (props: ProfileProps) => {
           fontWeight={700}
           color={theme.palette.secondary.dark}
         >
-          {user.FirstName} {user.LastName}
+          {user.firstName} {user.lastName}
         </Typography>
         <Typography fontSize={"12px"} color={theme.palette.secondary.dark}>
           20 posts

@@ -60,4 +60,4 @@ export const selectAllPosts = (state: { posts: PostsState }) =>
   state.posts.posts;
 
 export const selectPostById = (state: { posts: PostsState }, postId: number) =>
-  state.posts.posts.find((post: Post) => post.PostID === postId);
+  state.posts.posts.find((post: Post) => post.postID === postId);

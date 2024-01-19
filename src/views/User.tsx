@@ -4,13 +4,15 @@ import PostListItem from "components/PostListItem";
 import PostFilter from "components/PostsFilter";
 import Profile from "components/Profile";
 import TextInput from "components/TextInput";
-import { mockPosts } from "model/Post";
+import { selectAllPosts } from "features/posts/postsSlice";
 import { mockUsers } from "model/User";
+import { useAppSelector } from "reduxHooks";
 
 const User = () => {
   const theme = useTheme();
   const user = mockUsers;
-  const posts = mockPosts;
+
+  const posts = useAppSelector(selectAllPosts);
 
   return (
     <Box>

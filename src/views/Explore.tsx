@@ -9,7 +9,6 @@ import {
 import PostListItem from "components/PostListItem";
 import TextInput from "components/TextInput";
 import { fetchPosts, selectAllPosts } from "features/posts/postsSlice";
-import { mockPosts } from "model/Post";
 import Topic, { mockTopics } from "model/Topic";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "reduxHooks";
@@ -61,10 +60,10 @@ const TopicListItem = ({ topic }: { topic: Topic }) => {
           zIndex={5}
         >
           <Typography fontSize={"20px"} color={"white"} fontWeight={700}>
-            {topic.Name}
+            {topic.topic}
           </Typography>
           <Typography fontSize={"12px"} color={"white"} mb="2px">
-            {topic.PostCount} Posts
+            {topic.topicPosts} Posts
           </Typography>
         </Box>
       </Box>
@@ -86,7 +85,6 @@ const Explore = () => {
   }, [postsStatus, dispatch]);
 
   const topics = mockTopics;
-  // const posts = mockPosts;
 
   return (
     <Box sx={{ flex: 1 }}>
@@ -100,7 +98,7 @@ const Explore = () => {
       <Header mt={"24px"}>Interest</Header>
       <Grid mt="0px" container spacing={2}>
         {topics.map((topic) => (
-          <TopicListItem topic={topic} key={topic.TopicID} />
+          <TopicListItem topic={topic} key={topic.topicID} />
         ))}
       </Grid>
       <Header mt={"24px"} mb={"16px"}>

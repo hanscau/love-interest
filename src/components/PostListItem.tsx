@@ -22,7 +22,7 @@ const PostListItem = ({ post }: PostListItemProps) => {
         flex={1}
       >
         <Image
-          src={post.ImageURL}
+          src={post.contentImageURL}
           alt=""
           boxSizing={"border-box"}
           bgcolor={"grey"}
@@ -36,14 +36,14 @@ const PostListItem = ({ post }: PostListItemProps) => {
             fontWeight={700}
             sx={{ color: theme.palette.secondary.dark }}
           >
-            {post.Title}
+            {post.title}
           </Typography>
           <Typography
             fontSize={"12px"}
             mb={"10px"}
             sx={{ color: theme.palette.secondary.dark }}
           >
-            {post.TopicID} / {post.created_at}
+            {post.topicID} / {post.created_at}
           </Typography>
           <PostInteract post={post}></PostInteract>
         </Box>
