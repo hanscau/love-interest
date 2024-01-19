@@ -14,6 +14,14 @@ const MainAppBar = ({ openLoginModal }: MainAppBarProps) => {
   const navigate = useNavigate();
   const user = useAppSelector(getCurrentUser);
 
+  const onCreatePostClick = () => {
+    if (user === null) {
+      openLoginModal();
+    } else {
+      navigate("/post/create");
+    }
+  };
+
   const onProfileClick = () => {
     if (user === null) {
       openLoginModal();
@@ -31,7 +39,7 @@ const MainAppBar = ({ openLoginModal }: MainAppBarProps) => {
           <Button
             variant="contained"
             endIcon={<Add />}
-            onClick={() => navigate("/post/create")}
+            onClick={() => onCreatePostClick()}
             sx={{
               background: theme.palette.secondary.light,
             }}
