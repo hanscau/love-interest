@@ -25,7 +25,8 @@ const MainAppBar = ({ openLoginModal }: MainAppBarProps) => {
   return (
     <AppBar position="static" color="transparent" sx={{ boxShadow: "none" }}>
       <Toolbar disableGutters>
-        <Logo flex={1}></Logo>
+        <Logo onClick={() => navigate("/")}></Logo>
+        <Box flex="1 1"></Box>
         <Box display={"flex"} gap={"14px"} alignItems={"center"}>
           <Button
             variant="contained"
