@@ -16,12 +16,28 @@ import Profile from "components/Profile";
 import { mockUsers } from "model/User";
 import { useAppSelector } from "reduxHooks";
 import { selectAllPosts } from "features/posts/postsSlice";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { API_URL } from "util/url";
+import Post, { ContentType, emptyPost } from "model/Post";
 
-const Post = () => {
+const PostPage = () => {
   const theme = useTheme();
-  const post = useAppSelector(selectAllPosts)[0];
   const comments = mockComments;
   const user = mockUsers;
+
+  const { postID } = useParams<{ postID: string }>();
+
+  const [post, setPost] = useState<Post>(emptyPost);
+
+  useEffect(() => {
+    axios.get(`${API_URL}/posts/${postID}`).then((res) => {
+      console.log(res.data);
+      const temp = { ...res.data, ...res.data.topic };
+      setPost(temp);
+    });
+  }, [postID]);
 
   return (
     <Box>
@@ -38,13 +54,23 @@ const Post = () => {
           fontSize={"12px"}
           color={theme.palette.secondary.dark}
         >
-          {post.topicID} | {post.created_at}
+          {post.topic} | {post.created_at}
         </Typography>
-        <Image
-          sx={{ mb: "22px" }}
-          src="https://picsum.photos/id/20/1080/600"
-          alt="postImage"
-        />
+        {post.contentType === ContentType.TEXT ? (
+          <Typography
+            mb={"22px"}
+            fontSize={"22px"}
+            color={theme.palette.secondary.dark}
+          >
+            {post.content}
+          </Typography>
+        ) : (
+          <Image
+            sx={{ mb: "22px" }}
+            src={post.contentImageURL}
+            alt="postImage"
+          />
+        )}
         <Box display={"flex"} alignItems={"flex-end"}>
           <Box display={"flex"} alignItems={"center"}>
             <Profile user={user}></Profile>
@@ -59,15 +85,15 @@ const Post = () => {
             </Button>
           </Box>
           <Box sx={{ flex: "1 1 auto" }}></Box>
-          <PostInteract post={post}></PostInteract>
+          {<PostInteract post={post}></PostInteract>}
         </Box>
       </Paper>
       <ReplyInput mb={"22px"}></ReplyInput>
-      {comments.map((comment) => (
+      {comments.map((comment, i) => (
         <Box pb={"22px"}>
-          <Comment comment={comment}></Comment>
-          {comment.Replies.map((reply) => (
-            <Comment comment={reply} ml={"64px"} reply></Comment>
+          <Comment comment={comment} key={i}></Comment>
+          {comment.Replies.map((reply, i) => (
+            <Comment comment={reply} ml={"64px"} key={i} reply></Comment>
           ))}
           <ReplyInput ml={"64px"}></ReplyInput>
         </Box>
@@ -76,4 +102,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default PostPage;
