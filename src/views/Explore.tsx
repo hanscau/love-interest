@@ -12,6 +12,7 @@ import { fetchPosts, selectAllPosts } from "features/posts/postsSlice";
 import { fetchTopics, selectAllTopics } from "features/topics/topicsSlice";
 import Topic, { mockTopics } from "model/Topic";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "reduxHooks";
 
 const Header = (props: TypographyProps) => {
@@ -75,6 +76,7 @@ const TopicListItem = ({ topic }: { topic: Topic }) => {
 const Explore = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const posts = useAppSelector(selectAllPosts);
   const topics = useAppSelector(selectAllTopics);
@@ -111,7 +113,11 @@ const Explore = () => {
       </Header>
       <Box display="flex" flexDirection="column" gap="4px">
         {posts.map((post, i) => (
-          <PostListItem post={post} key={i}></PostListItem>
+          <PostListItem
+            post={post}
+            key={i}
+            onClick={() => navigate(`/post/${post.id}`)}
+          ></PostListItem>
         ))}
       </Box>
     </Box>
