@@ -31,6 +31,7 @@ const MainAppBar = ({ openLoginModal }: MainAppBarProps) => {
           <Button
             variant="contained"
             endIcon={<Add />}
+            onClick={() => navigate("/post/create")}
             sx={{
               background: theme.palette.secondary.light,
             }}
