@@ -36,7 +36,7 @@ const UserPage = () => {
         const navUser = res.data.data;
         console.log(navUser);
         setNavigatedUser(navUser);
-        if (currentUser && navUser.userID === currentUser.userID) {
+        if (currentUser && navUser.userID === currentUser.id) {
           setIsCurrentUser(true);
         }
       })

@@ -1,5 +1,5 @@
 export default interface User {
-  userID: number;
+  id: number;
   firstName: string;
   lastName: string;
   username: string;
@@ -18,7 +18,7 @@ export enum Gender {
 }
 
 export const mockUsers: User = {
-  userID: 1,
+  id: 1,
   firstName: "John",
   lastName: "Doe",
   username: "JohnDoe",

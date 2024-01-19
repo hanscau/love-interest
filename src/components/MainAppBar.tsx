@@ -18,7 +18,7 @@ const MainAppBar = ({ openLoginModal }: MainAppBarProps) => {
     if (user === null) {
       openLoginModal();
     } else {
-      navigate(`/user/${user.userID}`);
+      navigate(`/user/${user.id}`);
     }
   };
 
