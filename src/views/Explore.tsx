@@ -9,6 +9,7 @@ import {
 import PostListItem from "components/PostListItem";
 import TextInput from "components/TextInput";
 import { fetchPosts, selectAllPosts } from "features/posts/postsSlice";
+import { fetchTopics, selectAllTopics } from "features/topics/topicsSlice";
 import Topic, { mockTopics } from "model/Topic";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "reduxHooks";
@@ -74,17 +75,22 @@ const TopicListItem = ({ topic }: { topic: Topic }) => {
 const Explore = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
+
   const posts = useAppSelector(selectAllPosts);
-  console.log(posts);
+  const topics = useAppSelector(selectAllTopics);
+  console.log(topics);
   const postsStatus = useAppSelector((state) => state.posts.status);
+  const topicsStatus = useAppSelector((state) => state.topics.status);
 
   useEffect(() => {
     if (postsStatus === "idle") {
       dispatch(fetchPosts());
     }
-  }, [postsStatus, dispatch]);
 
-  const topics = mockTopics;
+    if (topicsStatus === "idle") {
+      dispatch(fetchTopics());
+    }
+  }, [postsStatus, topicsStatus, dispatch]);
 
   return (
     <Box sx={{ flex: 1 }}>
