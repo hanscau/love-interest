@@ -13,7 +13,7 @@ const PostListItem = ({ post, onClick }: PostListItemProps) => {
   const theme = useTheme();
   return (
     <Box display={"flex"} gap="16px" onClick={onClick}>
-      <Avatar></Avatar>
+      <Avatar src={post.user.profileImageURL}></Avatar>
       <Box
         bgcolor={"white"}
         borderRadius={"6px"}
@@ -45,7 +45,7 @@ const PostListItem = ({ post, onClick }: PostListItemProps) => {
             mb={"10px"}
             sx={{ color: theme.palette.secondary.dark }}
           >
-            {post.topicID} / {post.created_at}
+            {post.topic.topic} / {post.created_at}
           </Typography>
           <PostInteract post={post}></PostInteract>
         </Box>

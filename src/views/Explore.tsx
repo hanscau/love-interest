@@ -90,6 +90,8 @@ const Explore = () => {
   const postsStatus = useAppSelector((state) => state.posts.status);
   const topicsStatus = useAppSelector((state) => state.topics.status);
 
+  console.log(posts);
+
   useEffect(() => {
     if (postsStatus === "idle") {
       dispatch(fetchPosts());

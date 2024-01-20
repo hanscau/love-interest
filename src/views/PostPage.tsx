@@ -104,7 +104,7 @@ const PostPage = () => {
           fontSize={"12px"}
           color={theme.palette.secondary.dark}
         >
-          {post.topic} | {post.created_at}
+          {post.topic.topic} | {post.created_at}
         </Typography>
         {post.contentType === ContentType.TEXT ? (
           <Typography
@@ -124,9 +124,9 @@ const PostPage = () => {
         <Box display={"flex"} alignItems={"flex-end"}>
           <Box display={"flex"} alignItems={"center"}>
             <Profile
-              firstName={post.firstName}
-              lastName={post.lastName}
-              imageURL={post.profileImageURL}
+              firstName={post.user.firstName}
+              lastName={post.user.lastName}
+              imageURL={post.user.profileImageURL}
             ></Profile>
             <Button
               variant="contained"

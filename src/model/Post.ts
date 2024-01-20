@@ -1,17 +1,17 @@
+import Topic, { emptyTopic } from "./Topic";
+import User, { emptyUser } from "./User";
+
 export default interface Post {
   id: number;
   userID: number;
   topicID: number;
   title: string;
-  topic: string;
   tags: string;
   content: string;
   contentType: ContentType;
   contentImageURL: string;
-  firstName: string;
-  lastName: string;
-  profileImageURL: string;
-  postLikes: number;
+  user: User;
+  topic: Topic;
   created_at: string;
 }
 
@@ -26,14 +26,11 @@ export const emptyPost: Post = {
   userID: 0,
   topicID: 0,
   title: "",
-  topic: "",
   tags: "",
   content: "",
   contentType: ContentType.TEXT,
   contentImageURL: "",
-  firstName: "",
-  lastName: "",
-  profileImageURL: "",
-  postLikes: 0,
+  user: emptyUser,
+  topic: emptyTopic,
   created_at: "",
 };

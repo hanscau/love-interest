@@ -13,11 +13,7 @@ const PostInteract = ({ post }: PostInteractProps) => {
   return (
     <Box>
       <Box display={"flex"} alignItems={"center"}>
-        <LikeInteract
-          fontSize="14px"
-          iconSize="16px"
-          like={post.postLikes}
-        ></LikeInteract>
+        <LikeInteract fontSize="14px" iconSize="16px" like={20}></LikeInteract>
         <Box display={"flex"}>
           {post.tags.split("#").map((tag, i) => (
             <Tag tag={tag} key={i}></Tag>
