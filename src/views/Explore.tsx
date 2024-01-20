@@ -29,10 +29,17 @@ const Header = (props: TypographyProps) => {
   );
 };
 
-const TopicListItem = ({ topic }: { topic: Topic }) => {
+const TopicListItem = ({
+  topic,
+  onClick,
+}: {
+  topic: Topic;
+  onClick: () => void;
+}) => {
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
       <Box
+        onClick={onClick}
         sx={{
           background: "url('https://picsum.photos/id/20/300/200')",
           backgroundSize: "cover",
@@ -105,7 +112,11 @@ const Explore = () => {
       <Header mt={"24px"}>Interest</Header>
       <Grid mt="0px" container spacing={2}>
         {topics.map((topic, i) => (
-          <TopicListItem topic={topic} key={i} />
+          <TopicListItem
+            topic={topic}
+            key={i}
+            onClick={() => navigate(`/topic/${topic.id}`)}
+          />
         ))}
       </Grid>
       <Header mt={"24px"} mb={"16px"}>
