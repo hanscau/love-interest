@@ -5,6 +5,15 @@ export default interface Topic {
   topicPosts: number;
   created_at: string;
 }
+
+export const emptyTopic: Topic = {
+  id: 0,
+  topic: "",
+  topicImageURL: "",
+  topicPosts: 0,
+  created_at: "",
+};
+
 export const mockTopics: Topic[] = [
   {
     id: 1,

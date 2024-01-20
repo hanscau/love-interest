@@ -1,20 +1,35 @@
 import { Add, Search } from "@mui/icons-material";
 import { Box, Button, Paper, Typography, useTheme } from "@mui/material";
+import axios from "axios";
 import PostListItem from "components/PostListItem";
 import PostFilter from "components/PostsFilter";
 import TextInput from "components/TextInput";
 import { selectAllPosts } from "features/posts/postsSlice";
-import { mockTopics } from "model/Topic";
+import { emptyTopic, mockTopics } from "model/Topic";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "reduxHooks";
+import { API_URL } from "util/url";
 
 const TopicPage = () => {
   const theme = useTheme();
-  const params = useParams();
-  console.log(params.topicID);
+  const { topicID } = useParams<{ topicID: string }>();
 
-  const topic = mockTopics[0];
+  const [topic, setTopic] = useState(emptyTopic);
+
   const posts = useAppSelector(selectAllPosts);
+
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/topics/${topicID}`)
+      .then((res) => {
+        console.log(res.data);
+        setTopic(res.data);
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  }, [topicID]);
 
   return (
     <Box flex={1}>
@@ -22,7 +37,7 @@ const TopicPage = () => {
         sx={{
           width: "100%",
           height: "350px",
-          background: "url('https://picsum.photos/id/20/800/600')",
+          background: `url('${topic.topicImageURL}')`,
           backgroundSize: "cover",
           borderRadius: "6px",
           position: "relative",
@@ -59,7 +74,7 @@ const TopicPage = () => {
             {topic.topicPosts} posts
           </Typography>
           <Button variant="contained" endIcon={<Add />} color="secondary">
-            Post in Pottery
+            Post in {topic.topic}
           </Button>
         </Box>
       </Paper>
