@@ -5,13 +5,25 @@ interface ReplyInputProps extends BoxProps {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   submit?: () => void;
+  show?: boolean;
 }
 
-const ReplyInput = ({ value, onChange, submit, ...rest }: ReplyInputProps) => {
+const ReplyInput = ({
+  value,
+  onChange,
+  submit,
+  show = true,
+  ...rest
+}: ReplyInputProps) => {
   const theme = useTheme();
 
   return (
-    <Box display={"flex"} gap={"16px"} alignItems={"center"} {...rest}>
+    <Box
+      display={show ? "flex" : "none"}
+      gap={"16px"}
+      alignItems={"center"}
+      {...rest}
+    >
       <Avatar />
 
       <TextInput

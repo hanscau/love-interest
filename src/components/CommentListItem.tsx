@@ -2,66 +2,99 @@ import {
   Avatar,
   Box,
   BoxProps,
+  Button,
   Paper,
   Typography,
   useTheme,
 } from "@mui/material";
 import Comment from "model/Comment";
 import LikeInteract from "./LikeInteract";
+import { useState } from "react";
+import ReplyInput from "./ReplyInput";
+import { useAppSelector } from "reduxHooks";
+import { getCurrentUser } from "features/user/userSlice";
+import axios from "axios";
+import { API_URL } from "util/url";
 
 export interface CommentProps extends BoxProps {
   comment: Comment;
   children?: React.ReactNode;
-  reply?: boolean;
+  onReply?: (replyText: string) => void;
 }
 
 const CommentListItem = (props: CommentProps) => {
-  const { reply, comment, children, ...rest } = props;
+  const { onReply, comment, children, ...rest } = props;
   const theme = useTheme();
+  const currentUser = useAppSelector(getCurrentUser);
+
+  const [showReply, setShowReply] = useState<boolean>(false);
+  const [userReply, setUserReply] = useState<string>("");
+
+  const submitReply = () => {
+    if (onReply && userReply !== "") {
+      onReply(userReply);
+      setUserReply("");
+    }
+  };
 
   return (
-    <Box display={"flex"} gap={"16px"} alignItems={"flex-start"} {...rest}>
-      <Avatar />
-      <Box>
-        <Box display={"flex"} alignItems={"flex-end"} mb={"8px"}>
-          <Typography
-            color={theme.palette.secondary.dark}
-            fontWeight={700}
-            fontSize={"16px"}
-            mr={"8px"}
-          >
-            {comment.userID}
-          </Typography>
-          <Typography
-            color={theme.palette.secondary.dark}
-            fontSize={"10px"}
-            mb={"3px"}
-          >
-            2s ago
-          </Typography>
-        </Box>
-        <Paper sx={{ p: "12px 16px", borderRadius: "16px" }}>
-          <Typography mb={"10px"} fontSize={"16px"}>
-            {comment.commentText}
-          </Typography>
-          <Box display={"flex"} alignItems={"center"} gap={"8px"}>
-            <LikeInteract
-              fontSize="12px"
-              iconSize="14px"
-              like={100}
-              mb={"2px"}
-            ></LikeInteract>
-            {!reply && (
-              <Typography
-                fontSize={"12px"}
-                color={theme.palette.secondary.dark}
+    <Box>
+      <Box display={"flex"} gap={"16px"} alignItems={"flex-start"} {...rest}>
+        <Avatar src={comment.user.profileImageURL} />
+        <Box>
+          <Box display={"flex"} alignItems={"flex-end"} mb={"8px"}>
+            <Typography
+              color={theme.palette.secondary.dark}
+              fontWeight={700}
+              fontSize={"16px"}
+              mr={"8px"}
+            >
+              {comment.user.firstName} {comment.user.lastName}
+            </Typography>
+            <Typography
+              color={theme.palette.secondary.dark}
+              fontSize={"10px"}
+              mb={"3px"}
+            >
+              {comment.created_at}
+            </Typography>
+          </Box>
+          <Paper sx={{ p: "12px 16px", borderRadius: "16px" }}>
+            <Typography mb={"10px"} fontSize={"16px"}>
+              {comment.commentText}
+            </Typography>
+            <Box display={"flex"} alignItems={"center"} gap={"8px"}>
+              <LikeInteract
+                fontSize="12px"
+                iconSize="14px"
+                like={100}
+                mb={"2px"}
+              ></LikeInteract>
+              <Button
+                size="small"
+                variant="text"
+                sx={{
+                  color: theme.palette.secondary.dark,
+                  fontSize: "12px",
+                  borderRadius: "12px",
+                }}
+                onClick={() => setShowReply(!showReply)}
               >
                 Reply
-              </Typography>
-            )}
-          </Box>
-        </Paper>
+              </Button>
+            </Box>
+          </Paper>
+        </Box>
       </Box>
+      {children}
+      <ReplyInput
+        ml={"64px"}
+        mt={"16px"}
+        show={showReply}
+        value={userReply}
+        onChange={(e) => setUserReply(e.target.value)}
+        submit={() => submitReply()}
+      />
     </Box>
   );
 };

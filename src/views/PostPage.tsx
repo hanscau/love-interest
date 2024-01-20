@@ -15,6 +15,7 @@ import axios from "axios";
 import { API_URL } from "util/url";
 import Post, { ContentType, emptyPost } from "model/Post";
 import { getCurrentUser } from "features/user/userSlice";
+import ReplyListItem from "components/ReplyListItem";
 
 const PostPage = () => {
   const theme = useTheme();
@@ -57,6 +58,32 @@ const PostPage = () => {
       .then((res) => {
         setComments([...comments, res.data]);
         setUserComment("");
+        console.log(res.data);
+      })
+      .catch((err) => {});
+  };
+
+  const onPostReply = (commentId: number, userReply: string) => {
+    if (userReply === "" && !currentUser) return;
+    axios
+      .post(
+        `${API_URL}/replies`,
+        {
+          user_id: currentUser?.id,
+          comment_id: commentId,
+          replyText: userReply,
+        },
+        { headers: { Authorization: `Bearer ${currentUser?.jwt}` } }
+      )
+      .then((res) => {
+        setComments(
+          comments.map((comment) => {
+            if (comment.id === commentId) {
+              return { ...comment, replies: [...comment.replies, res.data] };
+            }
+            return comment;
+          })
+        );
         console.log(res.data);
       })
       .catch((err) => {});
@@ -115,24 +142,28 @@ const PostPage = () => {
           {<PostInteract post={post}></PostInteract>}
         </Box>
       </Paper>
-      {currentUser && (
+      {
         <ReplyInput
           mb={"22px"}
           value={userComment}
           onChange={(e) => setUserComment(e.target.value)}
           submit={() => onPostComment()}
         ></ReplyInput>
-      )}
+      }
       {comments.map((comment, i) => (
-        <Box pb={"22px"}>
-          <CommentListItem comment={comment} key={i}>
+        <Box mb={"16px"}>
+          <CommentListItem
+            comment={comment}
+            key={i}
+            onReply={(replyText) => onPostReply(comment.id, replyText)}
+          >
             {comment.replies.map((reply, i) => (
-              <CommentListItem
-                comment={reply}
+              <ReplyListItem
+                reply={reply}
                 ml={"64px"}
+                mt={"16px"}
                 key={i}
-                reply
-              ></CommentListItem>
+              ></ReplyListItem>
             ))}
           </CommentListItem>
         </Box>
