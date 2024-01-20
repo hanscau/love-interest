@@ -10,7 +10,7 @@ import PostListItem from "components/PostListItem";
 import TextInput from "components/TextInput";
 import { fetchPosts, selectAllPosts } from "features/posts/postsSlice";
 import { fetchTopics, selectAllTopics } from "features/topics/topicsSlice";
-import Topic, { mockTopics } from "model/Topic";
+import Topic from "model/Topic";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "reduxHooks";
@@ -41,7 +41,7 @@ const TopicListItem = ({
       <Box
         onClick={onClick}
         sx={{
-          background: "url('https://picsum.photos/id/20/300/200')",
+          background: `url('${topic.topicImageURL}')`,
           backgroundSize: "cover",
           height: "120px",
           borderRadius: "6px",
