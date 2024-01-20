@@ -1,15 +1,24 @@
 import { Avatar, Box, BoxProps, Button, useTheme } from "@mui/material";
 import TextInput from "./TextInput";
 
-const ReplyInput = (props: BoxProps) => {
+interface ReplyInputProps extends BoxProps {
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  submit?: () => void;
+}
+
+const ReplyInput = ({ value, onChange, submit, ...rest }: ReplyInputProps) => {
   const theme = useTheme();
 
   return (
-    <Box display={"flex"} gap={"16px"} alignItems={"center"} {...props}>
+    <Box display={"flex"} gap={"16px"} alignItems={"center"} {...rest}>
       <Avatar />
 
       <TextInput
         placeholder="Say something nice"
+        value={value}
+        onChange={onChange}
+        onSubmit={submit}
         sx={{
           fontWeight: 700,
           color: theme.palette.secondary.dark,
@@ -18,6 +27,7 @@ const ReplyInput = (props: BoxProps) => {
       ></TextInput>
       <Button
         variant="contained"
+        onClick={submit}
         sx={{
           background: theme.palette.secondary.light,
           px: "32px",

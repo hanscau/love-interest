@@ -1,17 +1,10 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Paper,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, Paper, Typography, useTheme } from "@mui/material";
 import Image from "components/Image";
 import { Favorite } from "@mui/icons-material";
 import PostInteract from "components/PostInteract";
 import ReplyInput from "components/ReplyInput";
-import Comment from "components/Comment";
-import { mockComments } from "model/Comment";
+import CommentListItem from "components/CommentListItem";
+import Comment from "model/Comment";
 import Profile from "components/Profile";
 import { mockUsers } from "model/User";
 import { useAppSelector } from "reduxHooks";
@@ -21,15 +14,18 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "util/url";
 import Post, { ContentType, emptyPost } from "model/Post";
+import { getCurrentUser } from "features/user/userSlice";
 
 const PostPage = () => {
   const theme = useTheme();
-  const comments = mockComments;
-  const user = mockUsers;
 
   const { postID } = useParams<{ postID: string }>();
 
   const [post, setPost] = useState<Post>(emptyPost);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [userComment, setUserComment] = useState("");
+
+  const currentUser = useAppSelector(getCurrentUser);
 
   useEffect(() => {
     axios.get(`${API_URL}/posts/${postID}`).then((res) => {
@@ -37,7 +33,34 @@ const PostPage = () => {
       const temp = { ...res.data, ...res.data.topic };
       setPost(temp);
     });
+    axios
+      .get(`${API_URL}/comments/${postID}`)
+      .then((res) => {
+        console.log(res.data);
+        setComments(res.data);
+      })
+      .catch((err) => {});
   }, [postID]);
+
+  const onPostComment = () => {
+    if (userComment === "" && !currentUser) return;
+    axios
+      .post(
+        `${API_URL}/comments`,
+        {
+          user_id: currentUser?.id,
+          post_id: postID,
+          commentText: userComment,
+        },
+        { headers: { Authorization: `Bearer ${currentUser?.jwt}` } }
+      )
+      .then((res) => {
+        setComments([...comments, res.data]);
+        setUserComment("");
+        console.log(res.data);
+      })
+      .catch((err) => {});
+  };
 
   return (
     <Box>
@@ -92,14 +115,26 @@ const PostPage = () => {
           {<PostInteract post={post}></PostInteract>}
         </Box>
       </Paper>
-      <ReplyInput mb={"22px"}></ReplyInput>
+      {currentUser && (
+        <ReplyInput
+          mb={"22px"}
+          value={userComment}
+          onChange={(e) => setUserComment(e.target.value)}
+          submit={() => onPostComment()}
+        ></ReplyInput>
+      )}
       {comments.map((comment, i) => (
         <Box pb={"22px"}>
-          <Comment comment={comment} key={i}></Comment>
-          {comment.Replies.map((reply, i) => (
-            <Comment comment={reply} ml={"64px"} key={i} reply></Comment>
-          ))}
-          <ReplyInput ml={"64px"}></ReplyInput>
+          <CommentListItem comment={comment} key={i}>
+            {comment.replies.map((reply, i) => (
+              <CommentListItem
+                comment={reply}
+                ml={"64px"}
+                key={i}
+                reply
+              ></CommentListItem>
+            ))}
+          </CommentListItem>
         </Box>
       ))}
     </Box>

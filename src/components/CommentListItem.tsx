@@ -6,27 +6,21 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import Comments from "model/Comment";
+import Comment from "model/Comment";
 import LikeInteract from "./LikeInteract";
 
 export interface CommentProps extends BoxProps {
-  comment: Comments;
+  comment: Comment;
   children?: React.ReactNode;
   reply?: boolean;
 }
 
-const Comment = (props: CommentProps) => {
+const CommentListItem = (props: CommentProps) => {
   const { reply, comment, children, ...rest } = props;
   const theme = useTheme();
 
   return (
-    <Box
-      display={"flex"}
-      gap={"16px"}
-      alignItems={"flex-start"}
-      mb={"16px"}
-      {...rest}
-    >
+    <Box display={"flex"} gap={"16px"} alignItems={"flex-start"} {...rest}>
       <Avatar />
       <Box>
         <Box display={"flex"} alignItems={"flex-end"} mb={"8px"}>
@@ -36,7 +30,7 @@ const Comment = (props: CommentProps) => {
             fontSize={"16px"}
             mr={"8px"}
           >
-            {comment.UserID}
+            {comment.userID}
           </Typography>
           <Typography
             color={theme.palette.secondary.dark}
@@ -48,7 +42,7 @@ const Comment = (props: CommentProps) => {
         </Box>
         <Paper sx={{ p: "12px 16px", borderRadius: "16px" }}>
           <Typography mb={"10px"} fontSize={"16px"}>
-            {comment.Comment}
+            {comment.commentText}
           </Typography>
           <Box display={"flex"} alignItems={"center"} gap={"8px"}>
             <LikeInteract
@@ -72,4 +66,4 @@ const Comment = (props: CommentProps) => {
   );
 };
 
-export default Comment;
+export default CommentListItem;
