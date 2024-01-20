@@ -90,6 +90,7 @@ const CommentListItem = (props: CommentProps) => {
       <ReplyInput
         ml={"64px"}
         mt={"16px"}
+        user={currentUser}
         show={showReply}
         value={userReply}
         onChange={(e) => setUserReply(e.target.value)}

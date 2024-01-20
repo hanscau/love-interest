@@ -1,10 +1,12 @@
 import { Avatar, Box, BoxProps, Button, useTheme } from "@mui/material";
 import TextInput from "./TextInput";
+import User from "model/User";
 
 interface ReplyInputProps extends BoxProps {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   submit?: () => void;
+  user: User | null;
   show?: boolean;
 }
 
@@ -12,6 +14,7 @@ const ReplyInput = ({
   value,
   onChange,
   submit,
+  user,
   show = true,
   ...rest
 }: ReplyInputProps) => {
@@ -24,7 +27,7 @@ const ReplyInput = ({
       alignItems={"center"}
       {...rest}
     >
-      <Avatar />
+      <Avatar src={user ? user.profileImageURL : ""} />
 
       <TextInput
         placeholder="Say something nice"

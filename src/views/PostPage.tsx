@@ -142,19 +142,19 @@ const PostPage = () => {
           {<PostInteract post={post}></PostInteract>}
         </Box>
       </Paper>
-      {
+      {currentUser && (
         <ReplyInput
           mb={"22px"}
           value={userComment}
+          user={currentUser}
           onChange={(e) => setUserComment(e.target.value)}
           submit={() => onPostComment()}
         ></ReplyInput>
-      }
+      )}
       {comments.map((comment, i) => (
-        <Box mb={"16px"}>
+        <Box mb={"16px"} key={i}>
           <CommentListItem
             comment={comment}
-            key={i}
             onReply={(replyText) => onPostReply(comment.id, replyText)}
           >
             {comment.replies.map((reply, i) => (
