@@ -5,6 +5,7 @@ import PostListItem from "components/PostListItem";
 import PostFilter from "components/PostsFilter";
 import TextInput from "components/TextInput";
 import { selectAllPosts } from "features/posts/postsSlice";
+import Post from "model/Post";
 import { emptyTopic, mockTopics } from "model/Topic";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -16,8 +17,7 @@ const TopicPage = () => {
   const { topicID } = useParams<{ topicID: string }>();
 
   const [topic, setTopic] = useState(emptyTopic);
-
-  const posts = useAppSelector(selectAllPosts);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     axios
@@ -25,6 +25,16 @@ const TopicPage = () => {
       .then((res) => {
         console.log(res.data);
         setTopic(res.data);
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+
+    axios
+      .get(`${API_URL}/posts/topic/${topicID}`)
+      .then((res) => {
+        console.log(res.data);
+        setPosts(res.data);
       })
       .catch((err) => {
         console.warn(err);
@@ -92,7 +102,7 @@ const TopicPage = () => {
       </Box>
       <Box display="flex" flexDirection="column" gap="4px" mt={"16px"}>
         {posts.map((post) => (
-          <PostListItem post={post}></PostListItem>
+          <PostListItem post={post} key={post.id}></PostListItem>
         ))}
       </Box>
     </Box>
