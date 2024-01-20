@@ -8,7 +8,7 @@ import { mockTopics } from "model/Topic";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "reduxHooks";
 
-const Topic = () => {
+const TopicPage = () => {
   const theme = useTheme();
   const params = useParams();
   console.log(params.topicID);
@@ -84,4 +84,4 @@ const Topic = () => {
   );
 };
 
-export default Topic;
+export default TopicPage;
