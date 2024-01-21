@@ -8,7 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 import Comment from "model/Comment";
-import LikeInteract from "./LikeInteract";
+import LikeInteract, { ContentType } from "./LikeInteract";
 import { useState } from "react";
 import ReplyInput from "./ReplyInput";
 import { useAppSelector } from "reduxHooks";
@@ -67,7 +67,9 @@ const CommentListItem = (props: CommentProps) => {
               <LikeInteract
                 fontSize="12px"
                 iconSize="14px"
-                like={100}
+                contentType={ContentType.COMMENT}
+                contentId={comment.id}
+                like={comment.comment_likes}
                 mb={"2px"}
               ></LikeInteract>
               <Button

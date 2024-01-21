@@ -7,8 +7,8 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import LikeInteract from "./LikeInteract";
-import { useState } from "react";
+import LikeInteract, { ContentType } from "./LikeInteract";
+import { Component, useState } from "react";
 import ReplyInput from "./ReplyInput";
 import { useAppSelector } from "reduxHooks";
 import { getCurrentUser } from "features/user/userSlice";
@@ -51,7 +51,9 @@ const ReplyListItem = (props: ReplyListItemProps) => {
             <LikeInteract
               fontSize="12px"
               iconSize="14px"
-              like={100}
+              contentType={ContentType.REPLY}
+              contentId={reply.id}
+              like={reply.reply_likes}
               mb={"2px"}
             ></LikeInteract>
           </Box>

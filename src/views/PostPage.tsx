@@ -56,6 +56,7 @@ const PostPage = () => {
         { headers: { Authorization: `Bearer ${currentUser?.jwt}` } }
       )
       .then((res) => {
+        res.data.comment_likes = [];
         setComments([...comments, res.data]);
         setUserComment("");
         console.log(res.data);
@@ -76,6 +77,7 @@ const PostPage = () => {
         { headers: { Authorization: `Bearer ${currentUser?.jwt}` } }
       )
       .then((res) => {
+        res.data.reply_likes = [];
         setComments(
           comments.map((comment) => {
             if (comment.id === commentId) {

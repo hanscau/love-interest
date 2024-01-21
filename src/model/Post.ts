@@ -1,3 +1,4 @@
+import { LikeReference } from "components/LikeInteract";
 import Topic, { emptyTopic } from "./Topic";
 import User, { emptyUser } from "./User";
 
@@ -12,6 +13,7 @@ export default interface Post {
   contentImageURL: string;
   user: User;
   topic: Topic;
+  post_likes: LikeReference[];
   created_at: string;
 }
 
@@ -32,5 +34,6 @@ export const emptyPost: Post = {
   contentImageURL: "",
   user: emptyUser,
   topic: emptyTopic,
+  post_likes: [],
   created_at: "",
 };

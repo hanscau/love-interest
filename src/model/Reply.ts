@@ -1,3 +1,4 @@
+import { LikeReference } from "components/LikeInteract";
 import User from "./User";
 
 export default interface Reply {
@@ -6,5 +7,6 @@ export default interface Reply {
   userID: number;
   user: User;
   replyText: string;
+  reply_likes: LikeReference[];
   created_at: string;
 }
