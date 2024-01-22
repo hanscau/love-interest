@@ -1,12 +1,12 @@
 import { Box, BoxProps } from "@mui/material";
 import "App.css";
 
-interface ImageProps extends BoxProps {
+interface HTMLImageProps extends BoxProps {
   src: string;
   alt: string;
 }
 
-const Image = (props: ImageProps) => {
+const HTMLImage = (props: HTMLImageProps) => {
   const { src, alt, sx, ...rest } = props;
 
   return (
@@ -16,4 +16,4 @@ const Image = (props: ImageProps) => {
   );
 };
 
-export default Image;
+export default HTMLImage;

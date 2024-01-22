@@ -2,7 +2,7 @@ import { ThumbUp } from "@mui/icons-material";
 import { Avatar, Box, Typography, useTheme } from "@mui/material";
 import Post, { ContentType } from "model/Post";
 import PostInteract from "./PostInteract";
-import Image from "./Image";
+import HTMLImage from "./HTMLImage";
 
 interface PostListItemProps {
   post: Post;

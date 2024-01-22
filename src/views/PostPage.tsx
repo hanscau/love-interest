@@ -1,5 +1,5 @@
 import { Box, Button, Paper, Typography, useTheme } from "@mui/material";
-import Image from "components/Image";
+import HTMLImage from "components/HTMLImage";
 import { Favorite } from "@mui/icons-material";
 import PostInteract from "components/PostInteract";
 import ReplyInput from "components/ReplyInput";
@@ -117,7 +117,7 @@ const PostPage = () => {
             {post.content}
           </Typography>
         ) : (
-          <Image
+          <HTMLImage
             sx={{ mb: "22px" }}
             src={post.contentImageURL}
             alt="postImage"

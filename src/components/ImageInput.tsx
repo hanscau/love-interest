@@ -1,17 +1,27 @@
-import { Image } from "@mui/icons-material";
-import { Paper, PaperProps, Typography, useTheme } from "@mui/material";
+import { Box, Paper, PaperProps, Typography, useTheme } from "@mui/material";
+import HTMLImage from "./HTMLImage";
+import { DeleteForever, Image } from "@mui/icons-material";
 
-interface ImageInputProps extends PaperProps {}
+interface ImageInputProps extends PaperProps {
+  value: File | null;
+  deleteImage: () => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-const ImageInput = (props: ImageInputProps) => {
+const ImageInput = ({
+  sx,
+  value,
+  deleteImage,
+  onChange,
+  ...rest
+}: ImageInputProps) => {
   const theme = useTheme();
-  const { sx, ...rest } = props;
   return (
     <Paper
       sx={[
         {
-          height: "255px",
-          p: "8px 17px",
+          minHeight: "255px",
+          p: "17px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -21,14 +31,75 @@ const ImageInput = (props: ImageInputProps) => {
       ]}
       {...rest}
     >
-      <Image fontSize="large" sx={{ color: theme.palette.secondary.dark }} />
-      <Typography
-        color={theme.palette.secondary.dark}
-        fontWeight={700}
-        fontSize={"28px"}
-      >
-        Upload an Image
-      </Typography>
+      {value ? (
+        <Box position={"relative"}>
+          <HTMLImage src={URL.createObjectURL(value)} alt="User posted image" />
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            gap={"12px"}
+            position="absolute"
+            width={"100%"}
+            height={"100%"}
+            top={0}
+            left={0}
+            sx={{
+              cursor: "pointer",
+              background: "rgba(255, 255, 255, 0.0)",
+              opacity: 0,
+              transition:
+                "background 0.2s ease-in-out, opacity 0.2s ease-in-out",
+              "&:hover": { background: "rgba(255, 255, 255, 0.5)", opacity: 1 },
+            }}
+            onClick={deleteImage}
+          >
+            <DeleteForever
+              fontSize="large"
+              sx={{ color: theme.palette.secondary.dark }}
+            />
+
+            <Typography
+              color={theme.palette.secondary.dark}
+              fontWeight={700}
+              fontSize={"28px"}
+            >
+              Remove Image
+            </Typography>
+          </Box>
+        </Box>
+      ) : (
+        <label htmlFor="file-upload">
+          <Box
+            width={"100%"}
+            height={"100%"}
+            display={"flex"}
+            alignItems={"center"}
+            gap={"12px"}
+            sx={{ cursor: "pointer" }}
+          >
+            <Image
+              fontSize="large"
+              sx={{ color: theme.palette.secondary.dark }}
+            />
+            <Typography
+              color={theme.palette.secondary.dark}
+              fontWeight={700}
+              fontSize={"28px"}
+            >
+              Upload an Image
+            </Typography>
+          </Box>
+          <input
+            id="file-upload"
+            type="file"
+            name="postImage"
+            accept="image/*"
+            hidden
+            onChange={onChange}
+          />
+        </label>
+      )}
     </Paper>
   );
 };

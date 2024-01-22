@@ -31,11 +31,19 @@ const CreatePost = () => {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [topicId, setTopicId] = useState(-1);
   const [content, setContent] = useState("");
+  const [image, setImage] = useState<File | null>(null);
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState<string[]>([]);
 
   const deleteTag = (tag: string) => {
     setTags(tags.filter((t) => t !== tag));
+  };
+
+  const onUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    console.log(file);
+    setImage(file);
   };
 
   const onSubmit = () => {
@@ -149,7 +157,12 @@ const CreatePost = () => {
                 sx={{ borderRadius: "0px 16px 16px 16px" }}
               />
             ) : (
-              <ImageInput sx={{ borderRadius: "0px 16px 16px 16px" }} />
+              <ImageInput
+                deleteImage={() => setImage(null)}
+                value={image}
+                onChange={onUploadImage}
+                sx={{ borderRadius: "0px 16px 16px 16px" }}
+              />
             )}
           </Box>
           <Box
