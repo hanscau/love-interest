@@ -33,7 +33,7 @@ const UserPage = () => {
     axios
       .get(`${API_URL}/users/${userID}`)
       .then((res) => {
-        const navUser = res.data.data;
+        const navUser = res.data;
         setNavigatedUser(navUser);
         if (currentUser && navUser.id === currentUser.id) {
           setIsCurrentUser(true);
@@ -41,7 +41,7 @@ const UserPage = () => {
       })
       .catch((err) => {
         console.log(err);
-        navigate("/");
+        // navigate("/");
       });
   }, [userID, currentUser]);
 
