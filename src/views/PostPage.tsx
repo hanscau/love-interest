@@ -1,14 +1,18 @@
-import { Box, Button, Paper, Typography, useTheme } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Paper,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import HTMLImage from "components/HTMLImage";
 import { Favorite } from "@mui/icons-material";
 import PostInteract from "components/PostInteract";
 import ReplyInput from "components/ReplyInput";
 import CommentListItem from "components/CommentListItem";
 import Comment from "model/Comment";
-import Profile from "components/Profile";
-import { mockUsers } from "model/User";
 import { useAppSelector } from "reduxHooks";
-import { selectAllPosts } from "features/posts/postsSlice";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -141,11 +145,18 @@ const PostPage = () => {
         )}
         <Box display={"flex"} alignItems={"flex-end"}>
           <Box display={"flex"} alignItems={"center"}>
-            <Profile
-              firstName={post.user.firstName}
-              lastName={post.user.lastName}
-              imageURL={post.user.profileImageURL}
-            ></Profile>
+            <Box display={"flex"} alignItems={"center"}>
+              <Avatar sx={{ mr: "16px" }} src={post.user.profileImageURL} />
+              <Box mr={"22px"}>
+                <Typography
+                  fontSize={"20px"}
+                  fontWeight={700}
+                  color={theme.palette.secondary.dark}
+                >
+                  {post.user.firstName} {post.user.lastName}
+                </Typography>
+              </Box>
+            </Box>
             {currentUser && currentUser.id !== post.user.id && (
               <Button
                 variant="contained"

@@ -1,15 +1,21 @@
 import { Favorite, Search } from "@mui/icons-material";
-import { Box, Button, Paper, Typography, useTheme } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Paper,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import axios from "axios";
 import PostListItem from "components/PostListItem";
 import PostFilter from "components/PostsFilter";
-import Profile from "components/Profile";
 import TextInput from "components/TextInput";
-import { selectAllPosts } from "features/posts/postsSlice";
 import { getCurrentUser, logout } from "features/user/userSlice";
+import Post from "model/Post";
 import User, { emptyUser, mockUsers } from "model/User";
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "reduxHooks";
 import { API_URL } from "util/url";
 
@@ -18,10 +24,10 @@ const UserPage = () => {
   const navigate = useNavigate();
   const { userID } = useParams<{ userID: string }>();
   const dispatch = useAppDispatch();
-  const posts = useAppSelector(selectAllPosts);
   const currentUser = useAppSelector(getCurrentUser);
 
   const [navigatedUser, setNavigatedUser] = useState<User>(emptyUser);
+  const [userPosts, setUserPosts] = useState<Post[]>([]);
   const [isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
 
   const onLogout = () => {
@@ -43,17 +49,41 @@ const UserPage = () => {
         console.log(err);
         // navigate("/");
       });
+
+    axios
+      .get(`${API_URL}/posts/user/${userID}`)
+      .then((res) => {
+        console.log(res.data);
+        setUserPosts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        // navigate("/");
+      });
   }, [userID, currentUser]);
 
   return (
     <Box>
       <Paper sx={{ p: "22px", borderRadius: "16px", mb: "22px" }}>
         <Box display={"flex"} alignItems={"center"}>
-          <Profile
-            firstName={navigatedUser?.firstName}
-            lastName={navigatedUser?.lastName}
-            imageURL={navigatedUser?.profileImageURL}
-          ></Profile>
+          <Box display={"flex"} alignItems={"center"}>
+            <Avatar sx={{ mr: "16px" }} src={currentUser?.profileImageURL} />
+            <Box mr={"22px"}>
+              <Typography
+                fontSize={"20px"}
+                fontWeight={700}
+                color={theme.palette.secondary.dark}
+              >
+                {currentUser?.firstName} {currentUser?.lastName}
+              </Typography>
+              <Typography
+                fontSize={"12px"}
+                color={theme.palette.secondary.dark}
+              >
+                {userPosts.length} posts
+              </Typography>
+            </Box>
+          </Box>
           <Box sx={{ flex: "1 1 auto" }}></Box>
           {isCurrentUser ? (
             <Button
@@ -87,7 +117,7 @@ const UserPage = () => {
         <PostFilter />
       </Box>
       <Box display="flex" flexDirection="column" gap="4px" mt={"16px"}>
-        {posts.map((post, i) => (
+        {userPosts.map((post, i) => (
           <PostListItem post={post} key={i}></PostListItem>
         ))}
       </Box>
