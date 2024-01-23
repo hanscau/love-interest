@@ -2,7 +2,7 @@ import { ThumbUp, ThumbUpAltOutlined } from "@mui/icons-material";
 import { Box, BoxProps, IconButton, Typography, useTheme } from "@mui/material";
 import axios from "axios";
 import { getCurrentUser } from "features/user/userSlice";
-import { useEffect, useState } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import { useAppSelector } from "reduxHooks";
 import { API_URL } from "util/url";
 
@@ -53,7 +53,8 @@ const LikeInteract = ({
     });
   }, [like, currentUser]);
 
-  const onLike = () => {
+  const onLike = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     if (!currentUser) return;
 
     const likesObject: any = { user_id: currentUser?.id };
@@ -71,7 +72,8 @@ const LikeInteract = ({
       .catch((err) => {});
   };
 
-  const onDislike = () => {
+  const onDislike = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     if (!currentUser || !currentLike) return;
 
     axios
@@ -89,7 +91,7 @@ const LikeInteract = ({
   return (
     <Box display={"flex"} alignItems={"center"} {...rest}>
       {currentLike ? (
-        <IconButton onClick={() => onDislike()}>
+        <IconButton onClick={(e) => onDislike(e)}>
           <ThumbUp
             sx={{
               color: theme.palette.primary.main,
@@ -98,7 +100,7 @@ const LikeInteract = ({
           ></ThumbUp>
         </IconButton>
       ) : (
-        <IconButton onClick={() => onLike()}>
+        <IconButton onClick={(e) => onLike(e)}>
           <ThumbUpAltOutlined
             sx={{
               color: theme.palette.primary.main,
