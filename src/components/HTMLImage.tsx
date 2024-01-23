@@ -10,7 +10,17 @@ const HTMLImage = (props: HTMLImageProps) => {
   const { src, alt, sx, ...rest } = props;
 
   return (
-    <Box sx={sx} {...rest}>
+    <Box
+      sx={[
+        {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
+      {...rest}
+    >
       <img className="postImage" src={src} alt={alt} />
     </Box>
   );
