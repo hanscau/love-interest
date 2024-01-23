@@ -110,7 +110,7 @@ const InterestPage = () => {
           fontSize={"18px"}
           sx={{ color: theme.palette.secondary.dark }}
         >
-          Username's interest
+          {currentUser?.firstName} {currentUser?.lastName}'s interest
         </Typography>
       </Paper>
       <TextInput
