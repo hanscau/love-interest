@@ -63,7 +63,7 @@ const CreatePost = () => {
     formData.append("content", content);
     formData.append("contentType", contentType.toString());
     formData.append("tags", tags.join("#"));
-    formData.append("image", image as Blob, image?.name); // append the image file to the form data
+    image && formData.append("image", image as Blob, image?.name); // append the image file to the form data
 
     console.log(formData);
 

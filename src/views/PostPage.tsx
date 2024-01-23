@@ -91,6 +91,22 @@ const PostPage = () => {
       .catch((err) => {});
   };
 
+  const onShowInterest = (recipientId: number) => {
+    axios
+      .post(
+        `${API_URL}/interest_relations`,
+        {
+          sender_id: currentUser?.id,
+          recipient_id: recipientId,
+        },
+        { headers: { Authorization: `Bearer ${currentUser?.jwt}` } }
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {});
+  };
+
   return (
     <Box>
       <Paper sx={{ p: "22px", mb: "25px" }}>
@@ -130,15 +146,18 @@ const PostPage = () => {
               lastName={post.user.lastName}
               imageURL={post.user.profileImageURL}
             ></Profile>
-            <Button
-              variant="contained"
-              endIcon={<Favorite />}
-              sx={{
-                background: theme.palette.primary.light,
-              }}
-            >
-              Show Interest
-            </Button>
+            {currentUser && currentUser.id !== post.user.id && (
+              <Button
+                variant="contained"
+                endIcon={<Favorite />}
+                onClick={() => onShowInterest(post.user.id)}
+                sx={{
+                  background: theme.palette.primary.light,
+                }}
+              >
+                Show Interest
+              </Button>
+            )}
           </Box>
           <Box sx={{ flex: "1 1 auto" }}></Box>
           {<PostInteract post={post}></PostInteract>}

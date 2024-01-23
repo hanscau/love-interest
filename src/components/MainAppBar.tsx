@@ -46,7 +46,11 @@ const MainAppBar = ({ openLoginModal }: MainAppBarProps) => {
           >
             Share
           </Button>
-          <Loyalty fontSize="large" sx={{ color: "#CCABFF" }}></Loyalty>
+          <Loyalty
+            onClick={() => navigate("/interest")}
+            fontSize="large"
+            sx={{ color: "#CCABFF" }}
+          ></Loyalty>
           <Avatar onClick={() => onProfileClick()}></Avatar>
         </Box>
       </Toolbar>
