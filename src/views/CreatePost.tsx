@@ -29,7 +29,7 @@ const CreatePost = () => {
   const [contentType, setContentType] = useState(ContentType.TEXT);
   const [title, setTitle] = useState("");
   const [topics, setTopics] = useState<Topic[]>([]);
-  const [topicId, setTopicId] = useState(-1);
+  const [topic, setTopic] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [tag, setTag] = useState("");
@@ -47,21 +47,33 @@ const CreatePost = () => {
   };
 
   const onSubmit = () => {
-    console.log(title, topicId, content, user);
-    if (title === "" || topicId === -1 || content === "" || !user) return;
+    console.log(title, topic, content, user);
+    if (title === "" || topic === "" || !user) return;
+
+    const topicExist = topics.filter((t) => t.topic === topic)[0];
+
+    if (topicExist === undefined) {
+      //TODO: create new topic
+    }
+
+    const formData = new FormData();
+    formData.append("user_id", user?.id.toString());
+    formData.append("topic_id", topicExist.id.toString());
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("contentType", contentType.toString());
+    formData.append("tags", tags.join("#"));
+    formData.append("image", image as Blob, image?.name); // append the image file to the form data
+
+    console.log(formData);
+
     axios
-      .post(
-        `${API_URL}/posts`,
-        {
-          user_id: user?.id,
-          topic_id: topicId,
-          title,
-          content,
-          contentType,
-          tags: tags.join("#"),
+      .post(`${API_URL}/posts`, formData, {
+        headers: {
+          Authorization: `Bearer ${user?.jwt}`,
+          "Content-Type": "multipart/form-data", // set content type to multipart/form-data
         },
-        { headers: { Authorization: `Bearer ${user?.jwt}` } }
-      )
+      })
       .then((res) => {
         console.log(res.data);
         navigate(`/post/${res.data.id}`);
@@ -109,13 +121,12 @@ const CreatePost = () => {
           <Autocomplete
             disablePortal
             id="combo-box-demo"
-            getOptionLabel={(topic) => topic.topic}
-            getOptionKey={(topic) => topic.id}
-            options={topics}
+            freeSolo
+            options={topics.map((topic) => topic.topic)}
             renderInput={(params) => <TextField {...params} label="Topic" />}
-            onChange={(e: ChangeEvent<{}>, value: Topic | null) => {
+            onChange={(e: ChangeEvent<{}>, value: string | null) => {
               if (value) {
-                setTopicId(value.id);
+                setTopic(value);
               }
             }}
             sx={{
