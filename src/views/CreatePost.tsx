@@ -63,7 +63,7 @@ const CreatePost = () => {
     formData.append("content", content);
     formData.append("contentType", contentType.toString());
     formData.append("tags", tags.join("#"));
-    image && formData.append("image", image as Blob, image?.name); // append the image file to the form data
+    image && formData.append("image", image as Blob, image?.name);
 
     console.log(formData);
 
@@ -71,7 +71,7 @@ const CreatePost = () => {
       .post(`${API_URL}/posts`, formData, {
         headers: {
           Authorization: `Bearer ${user?.jwt}`,
-          "Content-Type": "multipart/form-data", // set content type to multipart/form-data
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {

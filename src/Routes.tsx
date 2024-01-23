@@ -1,3 +1,4 @@
+import Logout from "components/Logout";
 import { useRoutes } from "react-router-dom";
 import CreatePost from "views/CreatePost";
 import Explore from "views/Explore";
@@ -9,6 +10,7 @@ import UserPage from "views/UserPage";
 export default function Routes() {
   const routes = useRoutes([
     { path: "/", element: <Explore /> },
+    { path: "/logout", element: <Logout /> },
     { path: "/interest", element: <InterestPage /> },
     { path: "/post/create", element: <CreatePost /> },
     { path: "/post/:postID", element: <PostPage /> },

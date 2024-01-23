@@ -12,7 +12,12 @@ interface PostListItemProps {
 const PostListItem = ({ post, onClick }: PostListItemProps) => {
   const theme = useTheme();
   return (
-    <Box display={"flex"} gap="16px" onClick={onClick}>
+    <Box
+      display={"flex"}
+      gap="16px"
+      onClick={onClick}
+      sx={{ cursor: "pointer" }}
+    >
       <Avatar src={post.user.profileImageURL}></Avatar>
       <Box
         bgcolor={"white"}

@@ -4,15 +4,23 @@ interface ParagraphInputProps extends PaperProps {
   placeholder?: string;
   value: string;
   onChange: (e: any) => void;
+  minRows?: number;
+  maxRows?: number;
 }
 
 const ParagraphInput = ({
+  minRows,
+  maxRows,
   value,
   onChange,
   placeholder,
   sx,
 }: ParagraphInputProps) => {
   const theme = useTheme();
+
+  minRows = minRows || 10;
+  maxRows = maxRows || 17;
+
   return (
     <Paper
       component="form"
@@ -32,8 +40,8 @@ const ParagraphInput = ({
         multiline
         value={value}
         onChange={onChange}
-        minRows={10}
-        maxRows={17}
+        minRows={minRows}
+        maxRows={maxRows}
         fullWidth
       ></InputBase>
     </Paper>

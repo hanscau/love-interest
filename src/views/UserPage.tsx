@@ -1,4 +1,4 @@
-import { Favorite, Search } from "@mui/icons-material";
+import { Edit, Favorite, Search } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -11,6 +11,8 @@ import axios from "axios";
 import PostListItem from "components/PostListItem";
 import PostFilter from "components/PostsFilter";
 import TextInput from "components/TextInput";
+import { openLoginModal } from "features/loginModal/loginModalSlice";
+import { openUpdateModal } from "features/updateModal/updateModalSlice";
 import { getCurrentUser, logout } from "features/user/userSlice";
 import Post from "model/Post";
 import User, { emptyUser, mockUsers } from "model/User";
@@ -33,6 +35,10 @@ const UserPage = () => {
   const onLogout = () => {
     dispatch(logout());
     navigate("/");
+  };
+
+  const onProfileUpdate = () => {
+    dispatch(openUpdateModal());
   };
 
   useEffect(() => {
@@ -58,7 +64,6 @@ const UserPage = () => {
       })
       .catch((err) => {
         console.log(err);
-        // navigate("/");
       });
   }, [userID, currentUser]);
 
@@ -66,8 +71,35 @@ const UserPage = () => {
     <Box>
       <Paper sx={{ p: "22px", borderRadius: "16px", mb: "22px" }}>
         <Box display={"flex"} alignItems={"center"}>
-          <Box display={"flex"} alignItems={"center"}>
-            <Avatar sx={{ mr: "16px" }} src={currentUser?.profileImageURL} />
+          <Box display={"flex"} alignItems={"center"} gap={"16px"}>
+            <Box position={"relative"}>
+              <Avatar src={navigatedUser?.profileImageURL} />
+              {isCurrentUser && (
+                <Box
+                  position={"absolute"}
+                  top={"0px"}
+                  left={"0px"}
+                  width={"100%"}
+                  height={"100%"}
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  onClick={() => onProfileUpdate()}
+                  sx={{
+                    background: "rgba(255, 255, 255, 0)",
+                    transition: "background 0.15s ease-in-out, opacity 0.15s",
+                    opacity: 0,
+                    cursor: "pointer",
+                    "&:hover": {
+                      background: "rgba(255, 255, 255, 0.4)",
+                      opacity: 1,
+                    },
+                  }}
+                >
+                  <Edit sx={{ color: theme.palette.secondary.dark }} />
+                </Box>
+              )}
+            </Box>
             <Box mr={"22px"}>
               <Typography
                 fontSize={"20px"}
@@ -118,7 +150,11 @@ const UserPage = () => {
       </Box>
       <Box display="flex" flexDirection="column" gap="4px" mt={"16px"}>
         {userPosts.map((post, i) => (
-          <PostListItem post={post} key={i}></PostListItem>
+          <PostListItem
+            post={post}
+            key={i}
+            onClick={() => navigate(`/post/${post.id}`)}
+          ></PostListItem>
         ))}
       </Box>
     </Box>

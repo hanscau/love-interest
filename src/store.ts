@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "features/user/userSlice";
 import loginModalReducer from "features/loginModal/loginModalSlice";
+import updateModalReducer from "features/updateModal/updateModalSlice";
 import postsReducer from "features/posts/postsSlice";
 import topicsReducer from "features/topics/topicsSlice";
 import { authMiddleware, getSaveUserData } from "util/authMiddleware";
@@ -14,6 +15,7 @@ const store = configureStore({
   reducer: {
     user: userReducer,
     loginModal: loginModalReducer,
+    updateModal: updateModalReducer,
     posts: postsReducer,
     topics: topicsReducer,
   },

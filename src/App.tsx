@@ -5,25 +5,39 @@ import MainAppBar from "components/MainAppBar";
 import Login from "components/Login";
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "reduxHooks";
-import { closeModal, openModal } from "features/loginModal/loginModalSlice";
+import {
+  closeLoginModal,
+  openLoginModal,
+} from "features/loginModal/loginModalSlice";
+import UpdateProfile from "components/UpdateProfile";
+import { closeUpdateModal } from "features/updateModal/updateModalSlice";
 
 function App() {
-  const isOpen = useAppSelector((state) => state.loginModal.isOpen);
+  const isLoginOpen = useAppSelector((state) => state.loginModal.isOpen);
+  const isUpdateOpen = useAppSelector((state) => state.updateModal.isOpen);
   const dispatch = useAppDispatch();
 
-  const openLoginModal = () => {
-    dispatch(openModal());
+  const onOpenLoginModal = () => {
+    dispatch(openLoginModal());
   };
 
-  const closeLoginModal = () => {
-    dispatch(closeModal());
+  const onCloseLoginModal = () => {
+    dispatch(closeLoginModal());
+  };
+
+  const onCloseUpdateModal = () => {
+    dispatch(closeUpdateModal());
   };
 
   return (
     <Container maxWidth="lg" sx={{ pb: "64px" }}>
-      <MainAppBar openLoginModal={openLoginModal} />
+      <MainAppBar openLoginModal={onOpenLoginModal} />
       <Routes />
-      <Login isOpen={isOpen} closeLoginModal={closeLoginModal} />
+      <Login isOpen={isLoginOpen} closeLoginModal={onCloseLoginModal} />
+      <UpdateProfile
+        isOpen={isUpdateOpen}
+        closeLoginModal={onCloseUpdateModal}
+      />
     </Container>
   );
 }
