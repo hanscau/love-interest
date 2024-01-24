@@ -13,19 +13,7 @@ import { BrowserRouter } from "react-router-dom";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { Provider } from "react-redux";
 import store from "store";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      light: "linear-gradient(262deg, #EC5627 0%, #FC2126 100%)",
-      main: "#F8566D",
-    },
-    secondary: {
-      main: "#CCABFF",
-      dark: "#353553",
-    },
-  },
-});
+import { theme } from "util/theme";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
