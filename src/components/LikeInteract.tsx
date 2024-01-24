@@ -38,6 +38,8 @@ const LikeInteract = ({
   const theme = useTheme();
   const currentUser = useAppSelector(getCurrentUser);
 
+  like = like || [];
+
   const [currentLike, setCurrentLike] = useState<LikeReference | null>(null);
   const [likeCount, setLikeCount] = useState(like.length);
 

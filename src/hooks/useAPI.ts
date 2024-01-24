@@ -1,13 +1,15 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import Post from "model/Post";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "./useRedux";
 import { getCurrentUser } from "features/user/userSlice";
 import { API_URL } from "util/url";
 import Topic from "model/Topic";
+import Comment from "model/Comment";
 
 interface API_Data<T> {
   data: T | null;
+  setData: React.Dispatch<React.SetStateAction<T | null>>;
   isLoading: boolean;
   error: any;
 }
@@ -16,27 +18,17 @@ const API_JOINER = (...path: string[]) => {
   return `${API_URL}/${path.join("/")}`;
 };
 
-const useAPI = <T>(
-  url: string,
-  option: "GET" | "PUT" | "POST" | "DELETE",
-  withLogin: boolean = false
-) => {
-  const axiosFunction = {
-    GET: axios.get,
-    PUT: axios.put,
-    POST: axios.post,
-    DELETE: axios.delete,
-  };
-
+const useGetAPI = <T>(url: string, withLogin: boolean = false) => {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const currentUser = useAppSelector(getCurrentUser);
 
-  const request = (header: { header: { Authorization?: string } }) => {
+  const request = (headers: AxiosRequestConfig) => {
     setIsLoading(true);
-    axiosFunction[option](url, header)
+    axios
+      .get(url, headers)
       .then((res) => {
         setData(res.data);
       })
@@ -49,20 +41,61 @@ const useAPI = <T>(
   };
 
   useEffect(() => {
-    const header =
+    const headers =
       withLogin && currentUser
         ? { Authorization: `Bearer ${currentUser.jwt}` }
         : {};
-    request({ header });
+    request({ headers });
   }, [currentUser]);
 
-  return { data, isLoading, error };
+  return { data, setData, isLoading, error };
 };
 
-export const useGetAllPosts = (): API_Data<Post[]> => {
-  return useAPI<Post[]>(API_JOINER("posts"), "GET");
+const usePostAPI = <T>(url: string) => {
+  const currentUser = useAppSelector(getCurrentUser);
+  const postRequest = (payload: T) => {
+    return axios.post(url, payload, {
+      headers: { Authorization: `Bearer ${currentUser?.jwt}` },
+    });
+  };
+  return postRequest;
 };
 
-export const useGetAllTopics = (): API_Data<Topic[]> => {
-  return useAPI<Topic[]>(API_JOINER("topics"), "GET");
+export const useGetAllPosts = () => {
+  return useGetAPI<Post[]>(API_JOINER("posts"));
+};
+
+export const useGetAllTopics = () => {
+  return useGetAPI<Topic[]>(API_JOINER("topics"));
+};
+
+export const useGetPost = (postId: string) => {
+  return useGetAPI<Post>(API_JOINER("posts", postId));
+};
+
+export const useGetPostComments = (postId: string) => {
+  return useGetAPI<Comment[]>(API_JOINER("comments", postId));
+};
+
+export const usePostComment = () => {
+  return usePostAPI<{
+    user_id: number;
+    post_id: number;
+    commentText: string;
+  }>(API_JOINER("comments"));
+};
+
+export const usePostReply = () => {
+  return usePostAPI<{
+    user_id: number;
+    comment_id: number;
+    replyText: string;
+  }>(API_JOINER("replies"));
+};
+
+export const usePostInterest = () => {
+  return usePostAPI<{
+    sender_id: number;
+    recipient_id: number;
+  }>(API_JOINER("interest_relations"));
 };
