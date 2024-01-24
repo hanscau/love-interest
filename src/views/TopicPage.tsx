@@ -1,5 +1,12 @@
 import { Add, Search } from "@mui/icons-material";
-import { Box, Button, Paper, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Paper,
+  Skeleton,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import axios from "axios";
 import PostListItem from "components/PostListItem";
 import PostFilter from "components/PostsFilter";
@@ -11,35 +18,23 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "hooks/useRedux";
 import { API_URL } from "util/url";
+import { useGetTopic, useGetTopicPosts } from "hooks/useAPI";
+import PostListItemSkeleton from "components/skeletons/PostLitsItemSkeleton";
 
 const TopicPage = () => {
   const theme = useTheme();
   const { topicID } = useParams<{ topicID: string }>();
 
-  const [topic, setTopic] = useState(emptyTopic);
-  const [posts, setPosts] = useState<Post[]>([]);
-
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/topics/${topicID}`)
-      .then((res) => {
-        console.log(res.data);
-        setTopic(res.data);
-      })
-      .catch((err) => {
-        console.warn(err);
-      });
-
-    axios
-      .get(`${API_URL}/posts/topic/${topicID}`)
-      .then((res) => {
-        console.log(res.data);
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        console.warn(err);
-      });
-  }, [topicID]);
+  const {
+    data: topic,
+    isLoading: topicLoading,
+    error,
+  } = useGetTopic(topicID || "");
+  const {
+    data: posts,
+    isLoading: postsLoading,
+    error: postsError,
+  } = useGetTopicPosts(topicID || "");
 
   return (
     <Box flex={1}>
@@ -47,7 +42,9 @@ const TopicPage = () => {
         sx={{
           width: "100%",
           height: "350px",
-          background: `url('${topic.topicImageURL}')`,
+          background: topicLoading
+            ? "#e7e7e7"
+            : topic && `url('${topic.topicImageURL}')`,
           backgroundSize: "cover",
           borderRadius: "6px",
           position: "relative",
@@ -65,28 +62,37 @@ const TopicPage = () => {
             borderRadius: "6px",
           }}
         ></Box>
-        <Box
-          display={"flex"}
-          zIndex={5}
-          p="16px"
-          alignItems={"flex-end"}
-          width={"100%"}
-        >
-          <Typography
-            color={"white"}
-            fontSize={"20px"}
-            fontWeight={700}
-            mr={"8px"}
-          >
-            {topic.topic}
-          </Typography>
-          <Typography color={"white"} fontSize={"12px"} flex={1}>
-            {topic.topicPosts} posts
-          </Typography>
-          <Button variant="contained" endIcon={<Add />} color="secondary">
-            Post in {topic.topic}
-          </Button>
-        </Box>
+        {topicLoading ? (
+          <Box zIndex={5} p="16px" alignItems={"flex-end"} width={"100%"}>
+            <Skeleton width="250px" sx={{ fontSize: "20px" }}></Skeleton>
+            <Skeleton width="120px" sx={{ fontSize: "12px" }}></Skeleton>
+          </Box>
+        ) : (
+          topic && (
+            <Box
+              display={"flex"}
+              zIndex={5}
+              p="16px"
+              alignItems={"flex-end"}
+              width={"100%"}
+            >
+              <Typography
+                color={"white"}
+                fontSize={"20px"}
+                fontWeight={700}
+                mr={"8px"}
+              >
+                {topic.topic}
+              </Typography>
+              <Typography color={"white"} fontSize={"12px"} flex={1}>
+                {posts?.length} posts
+              </Typography>
+              <Button variant="contained" endIcon={<Add />} color="secondary">
+                Post in {topic.topic}
+              </Button>
+            </Box>
+          )
+        )}
       </Paper>
       <Box display={"flex"} gap={"12px"} mt={"18px"}>
         <TextInput
@@ -99,9 +105,12 @@ const TopicPage = () => {
         <PostFilter />
       </Box>
       <Box display="flex" flexDirection="column" gap="4px" mt={"16px"}>
-        {posts.map((post) => (
-          <PostListItem post={post} key={post.id}></PostListItem>
-        ))}
+        {postsLoading
+          ? [1, 2, 3].map((i) => <PostListItemSkeleton key={i} />)
+          : posts &&
+            posts.map((post) => (
+              <PostListItem post={post} key={post.id}></PostListItem>
+            ))}
       </Box>
     </Box>
   );

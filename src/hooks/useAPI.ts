@@ -66,12 +66,20 @@ export const useGetUser = (userId: string) => {
   return useGetAPI<User>(API_JOINER("users", userId));
 };
 
+export const useGetTopic = (topicId: string) => {
+  return useGetAPI<Topic>(API_JOINER("topics", topicId));
+};
+
 export const useGetAllPosts = () => {
   return useGetAPI<Post[]>(API_JOINER("posts"));
 };
 
 export const useGetAllTopics = () => {
   return useGetAPI<Topic[]>(API_JOINER("topics"));
+};
+
+export const useGetTopicPosts = (topicId: string) => {
+  return useGetAPI<Post[]>(API_JOINER("posts", "topic", topicId));
 };
 
 export const useGetUserPosts = (userId: string) => {
