@@ -1,4 +1,4 @@
-import { Delete, Search } from "@mui/icons-material";
+import { Delete, Phone, Search } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -14,13 +14,14 @@ import User from "model/User";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "hooks/useRedux";
 import { API_URL } from "util/url";
+import { useSearch } from "hooks/useSearch";
 
 interface UserLite {
   id: number;
   firstName: string;
   lastName: string;
   profileImageURL: string;
-  phoneNumber?: string;
+  phoneNo?: string;
   created_at: string;
 }
 
@@ -49,11 +50,22 @@ const InterestListItem = ({
       <Box flex={"1 1 auto"}></Box>
       <Box display={"flex"} alignItems={"center"} gap={"12px"}>
         {match && (
-          <Typography
+          <Box
+            display={"flex"}
+            alignItems={"center"}
+            gap={"8px"}
             sx={{ background: "#ffe6e6", p: "4px 12px", borderRadius: "6px" }}
           >
-            {user.phoneNumber}
-          </Typography>
+            <Phone sx={{ color: theme.palette.black, fontSize: "18px" }} />
+            <Typography
+              sx={{
+                color: theme.palette.black,
+              }}
+              fontWeight={700}
+            >
+              {user.phoneNo}
+            </Typography>
+          </Box>
         )}
         <IconButton>
           <Delete color="primary" />
@@ -69,6 +81,8 @@ const InterestPage = () => {
   const currentUser = useAppSelector(getCurrentUser);
   const [interests, setInterests] = useState<User[]>([]);
   const [matches, setMatches] = useState<User[]>([]);
+
+  const { search, setSearch, filterUser } = useSearch();
 
   useEffect(() => {
     if (currentUser) {
@@ -101,7 +115,7 @@ const InterestPage = () => {
           mb: "12px",
         }}
       >
-        <Avatar></Avatar>
+        <Avatar src={currentUser?.profileImageURL}></Avatar>
         <Typography
           fontWeight={700}
           fontSize={"18px"}
@@ -113,6 +127,8 @@ const InterestPage = () => {
       <TextInput
         sx={{ mb: "22px" }}
         placeholder="Search"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
         InputIcon={<Search sx={{ mr: "8px" }} />}
       ></TextInput>
       <Typography
@@ -124,7 +140,7 @@ const InterestPage = () => {
         Matched Interest
       </Typography>
       <Box mb={"22px"}>
-        {matches.map((user, i) => (
+        {matches.filter(filterUser).map((user, i) => (
           <InterestListItem user={user} key={i} match />
         ))}
       </Box>
@@ -137,7 +153,7 @@ const InterestPage = () => {
         Interest Shown
       </Typography>
       <Box>
-        {interests.map((user, i) => (
+        {interests.filter(filterUser).map((user, i) => (
           <InterestListItem user={user} match={false} key={i} />
         ))}
       </Box>

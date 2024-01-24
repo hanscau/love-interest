@@ -1,5 +1,6 @@
 import Post, { ContentType } from "model/Post";
 import Topic from "model/Topic";
+import User from "model/User";
 import { useState } from "react";
 
 export const useSearch = () => {
@@ -23,5 +24,13 @@ export const useSearch = () => {
     return false;
   };
 
-  return { search, setSearch, filterPost, filterTopic };
+  const filterUser = (user: User) => {
+    if (search === "") return true;
+    if (user.firstName.toLowerCase().includes(search.toLowerCase()))
+      return true;
+    if (user.lastName.toLowerCase().includes(search.toLowerCase())) return true;
+    return false;
+  };
+
+  return { search, setSearch, filterPost, filterTopic, filterUser };
 };
