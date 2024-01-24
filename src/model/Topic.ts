@@ -1,9 +1,14 @@
-export default interface Topic {
+export default interface Topic extends TopicOption {
   id: number;
   topic: string;
   topicImageURL: string;
   topicPosts: number;
   created_at: string;
+}
+
+export interface TopicOption {
+  topic: string;
+  id: number;
 }
 
 export const emptyTopic: Topic = {

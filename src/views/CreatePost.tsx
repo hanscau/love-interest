@@ -1,12 +1,4 @@
-import {
-  Autocomplete,
-  Avatar,
-  Box,
-  Button,
-  TextField,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Avatar, Box, Button, Typography, useTheme } from "@mui/material";
 import axios from "axios";
 import ImageInput from "components/ImageInput";
 import ParagraphInput from "components/ParagraphInput";
@@ -14,11 +6,12 @@ import Tag from "components/Tag";
 import TextInput from "components/TextInput";
 import { getCurrentUser } from "features/user/userSlice";
 import { ContentType } from "model/Post";
-import Topic from "model/Topic";
-import { ChangeEvent, useEffect, useState } from "react";
+import Topic, { TopicOption } from "model/Topic";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "hooks/useRedux";
 import { API_URL } from "util/url";
+import AppAutocomplete from "components/AppAutocomplete";
 
 const CreatePost = () => {
   const theme = useTheme();
@@ -26,10 +19,13 @@ const CreatePost = () => {
 
   const user = useAppSelector(getCurrentUser);
 
+  const emptyValidation = { title: "", topic: "", content: "" };
+
   const [contentType, setContentType] = useState(ContentType.TEXT);
+  const [validation, setValidation] = useState(emptyValidation);
   const [title, setTitle] = useState("");
   const [topics, setTopics] = useState<Topic[]>([]);
-  const [topic, setTopic] = useState("");
+  const [topic, setTopic] = useState<TopicOption | null>(null);
   const [content, setContent] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [tag, setTag] = useState("");
@@ -46,19 +42,42 @@ const CreatePost = () => {
     setImage(file);
   };
 
-  const onSubmit = () => {
-    console.log(title, topic, content, user);
-    if (title === "" || topic === "" || !user) return;
+  const onSubmit = async () => {
+    if (user === null) return;
+    const error = { ...emptyValidation };
 
-    const topicExist = topics.filter((t) => t.topic === topic)[0];
+    if (title === "") error.title = "Title is required";
+    if (topic === null) error.topic = "Topic is required";
+    if (contentType === ContentType.TEXT) {
+      if (content === "") error.content = "Content is required";
+    } else {
+      if (image === null) error.content = "Image is required";
+    }
 
-    if (topicExist === undefined) {
-      //TODO: create new topic
+    setValidation(error);
+    if (error.title !== "" || error.topic !== "" || error.content !== "") {
+      return;
+    }
+
+    let tempTopic = topic;
+    if (topic?.id === -1) {
+      const response = await axios.post(
+        `${API_URL}/topics`,
+        { topicName: topic.topic },
+        {
+          headers: {
+            Authorization: `Bearer ${user?.jwt}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response.data);
+      tempTopic = response.data as TopicOption;
     }
 
     const formData = new FormData();
     formData.append("user_id", user?.id.toString());
-    formData.append("topic_id", topicExist.id.toString());
+    tempTopic && formData.append("topic_id", tempTopic?.id.toString());
     formData.append("title", title);
     formData.append("content", content);
     formData.append("contentType", contentType.toString());
@@ -116,25 +135,49 @@ const CreatePost = () => {
             placeholder="Post Name"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            error={validation.title !== ""}
+            errorText={validation.title}
             sx={{ flex: "1 1 auto" }}
           ></TextInput>
-          <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            freeSolo
-            options={topics.map((topic) => topic.topic)}
-            renderInput={(params) => <TextField {...params} label="Topic" />}
-            onChange={(e: ChangeEvent<{}>, value: string | null) => {
-              if (value) {
-                setTopic(value);
-              }
-            }}
-            sx={{
-              width: "300px",
-              mb: "28px",
-            }}
-          ></Autocomplete>
-
+          <Box mb={"18px"}>
+            <AppAutocomplete
+              value={topic}
+              options={topics}
+              onChange={(event, newValue) => {
+                if (typeof newValue === "string") {
+                  setTopic({
+                    topic: newValue,
+                    id: -1,
+                  });
+                } else if (newValue && newValue.topic) {
+                  if (newValue.id === -1) {
+                    const newTopic = newValue.topic.split('"')[1];
+                    setTopic({
+                      topic: newTopic,
+                      id: newValue.id,
+                    });
+                  } else {
+                    setTopic({
+                      topic: newValue.topic,
+                      id: newValue.id,
+                    });
+                  }
+                } else {
+                  setTopic(newValue);
+                }
+              }}
+            ></AppAutocomplete>
+            {validation.topic !== "" && (
+              <Typography
+                fontSize={"12px"}
+                ml={"12px"}
+                mt={"4px"}
+                color={"red"}
+              >
+                {validation.topic}
+              </Typography>
+            )}
+          </Box>
           <Box>
             <Box display={"flex"} gap={"2px"}>
               <Box
@@ -174,6 +217,16 @@ const CreatePost = () => {
                 onChange={onUploadImage}
                 sx={{ borderRadius: "0px 16px 16px 16px" }}
               />
+            )}
+            {validation.content !== "" && (
+              <Typography
+                fontSize={"12px"}
+                ml={"12px"}
+                mt={"4px"}
+                color={"red"}
+              >
+                {validation.content}
+              </Typography>
             )}
           </Box>
           <Box
