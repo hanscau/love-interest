@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "hooks/useRedux";
 import { API_URL } from "util/url";
+import { useGetUser, useGetUserPosts } from "hooks/useAPI";
 
 const UserPage = () => {
   const theme = useTheme();
@@ -28,8 +29,6 @@ const UserPage = () => {
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector(getCurrentUser);
 
-  const [navigatedUser, setNavigatedUser] = useState<User>(emptyUser);
-  const [userPosts, setUserPosts] = useState<Post[]>([]);
   const [isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
 
   const onLogout = () => {
@@ -41,31 +40,27 @@ const UserPage = () => {
     dispatch(openUpdateModal());
   };
 
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/users/${userID}`)
-      .then((res) => {
-        const navUser = res.data;
-        setNavigatedUser(navUser);
-        if (currentUser && navUser.id === currentUser.id) {
-          setIsCurrentUser(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        // navigate("/");
-      });
+  const {
+    data: navigatedUser,
+    setData: setNavigatedUser,
+    isLoading,
+    error,
+  } = useGetUser(userID || "");
 
-    axios
-      .get(`${API_URL}/posts/user/${userID}`)
-      .then((res) => {
-        console.log(res.data);
-        setUserPosts(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [userID, currentUser]);
+  const {
+    data: navigatedUserPosts,
+    setData: setNavigatedUserPosts,
+    isLoading: postsLoading,
+    error: postError,
+  } = useGetUserPosts(userID || "");
+
+  console.log(navigatedUser);
+
+  useEffect(() => {
+    if (currentUser && navigatedUser && navigatedUser.id === currentUser.id) {
+      setIsCurrentUser(true);
+    }
+  }, [navigatedUser, currentUser]);
 
   return (
     <Box>
@@ -106,30 +101,31 @@ const UserPage = () => {
                 fontWeight={700}
                 color={theme.palette.black}
               >
-                {currentUser?.firstName} {currentUser?.lastName}
+                {navigatedUser?.firstName} {navigatedUser?.lastName}
               </Typography>
               <Typography fontSize={"12px"} color={theme.palette.black}>
-                {userPosts.length} posts
+                {navigatedUserPosts?.length} posts
               </Typography>
             </Box>
           </Box>
           <Box sx={{ flex: "1 1 auto" }}></Box>
-          {isCurrentUser ? (
-            <Button
-              onClick={() => onLogout()}
-              sx={{ color: theme.palette.black }}
-            >
-              Logout
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              endIcon={<Favorite />}
-              sx={{ background: theme.palette.primary.light }}
-            >
-              Show Interest
-            </Button>
-          )}
+          {currentUser &&
+            (isCurrentUser ? (
+              <Button
+                onClick={() => onLogout()}
+                sx={{ color: theme.palette.black }}
+              >
+                Logout
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                endIcon={<Favorite />}
+                sx={{ background: theme.palette.primaryGradient }}
+              >
+                Show Interest
+              </Button>
+            ))}
         </Box>
         {navigatedUser?.bio && (
           <Typography mt={"16px"}>{navigatedUser.bio}</Typography>
@@ -144,13 +140,14 @@ const UserPage = () => {
         <PostFilter />
       </Box>
       <Box display="flex" flexDirection="column" gap="4px" mt={"16px"}>
-        {userPosts.map((post, i) => (
-          <PostListItem
-            post={post}
-            key={i}
-            onClick={() => navigate(`/post/${post.id}`)}
-          ></PostListItem>
-        ))}
+        {navigatedUserPosts &&
+          navigatedUserPosts.map((post, i) => (
+            <PostListItem
+              post={post}
+              key={i}
+              onClick={() => navigate(`/post/${post.id}`)}
+            ></PostListItem>
+          ))}
       </Box>
     </Box>
   );

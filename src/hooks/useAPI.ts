@@ -6,6 +6,7 @@ import { getCurrentUser } from "features/user/userSlice";
 import { API_URL } from "util/url";
 import Topic from "model/Topic";
 import Comment from "model/Comment";
+import User from "model/User";
 
 interface API_Data<T> {
   data: T | null;
@@ -61,12 +62,20 @@ const usePostAPI = <T>(url: string) => {
   return postRequest;
 };
 
+export const useGetUser = (userId: string) => {
+  return useGetAPI<User>(API_JOINER("users", userId));
+};
+
 export const useGetAllPosts = () => {
   return useGetAPI<Post[]>(API_JOINER("posts"));
 };
 
 export const useGetAllTopics = () => {
   return useGetAPI<Topic[]>(API_JOINER("topics"));
+};
+
+export const useGetUserPosts = (userId: string) => {
+  return useGetAPI<Post[]>(API_JOINER("posts", "user", userId));
 };
 
 export const useGetPost = (postId: string) => {
