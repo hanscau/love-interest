@@ -7,23 +7,30 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import axios from "axios";
 import PostListItem from "components/PostListItem";
 import PostFilter from "components/PostsFilter";
 import TextInput from "components/TextInput";
-import { selectAllPosts } from "features/posts/postsSlice";
-import Post from "model/Post";
-import { emptyTopic, mockTopics } from "model/Topic";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useAppSelector } from "hooks/useRedux";
-import { API_URL } from "util/url";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "hooks/useRedux";
 import { useGetTopic, useGetTopicPosts } from "hooks/useAPI";
 import PostListItemSkeleton from "components/skeletons/PostLitsItemSkeleton";
+import { getCurrentUser } from "features/user/userSlice";
+import { openLoginModal } from "features/loginModal/loginModalSlice";
 
 const TopicPage = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { topicID } = useParams<{ topicID: string }>();
+  const currentUser = useAppSelector(getCurrentUser);
+
+  const onNewPost = () => {
+    if (currentUser === null) {
+      dispatch(openLoginModal());
+    } else {
+      navigate("/post/create");
+    }
+  };
 
   const {
     data: topic,
@@ -87,7 +94,12 @@ const TopicPage = () => {
               <Typography color={"white"} fontSize={"12px"} flex={1}>
                 {posts?.length} posts
               </Typography>
-              <Button variant="contained" endIcon={<Add />} color="secondary">
+              <Button
+                variant="contained"
+                endIcon={<Add />}
+                color="secondary"
+                onClick={() => onNewPost()}
+              >
                 Post in {topic.topic}
               </Button>
             </Box>
