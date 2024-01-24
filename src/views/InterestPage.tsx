@@ -86,7 +86,7 @@ const InterestPage = () => {
   useEffect(() => {
     if (currentUser) {
       axios
-        .get(`${API_URL}/interest_relations/${currentUser.id}`, {
+        .get(`${API_URL}/interest_relations/matches/${currentUser.id}`, {
           headers: {
             Authorization: `Bearer ${currentUser?.jwt}`,
           },
