@@ -21,6 +21,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "hooks/useRedux";
 import { API_URL } from "util/url";
 import { useGetUser, useGetUserPosts } from "hooks/useAPI";
+import PostListItemSkeleton from "components/skeletons/PostLitsItemSkeleton";
 
 const UserPage = () => {
   const theme = useTheme();
@@ -50,7 +51,7 @@ const UserPage = () => {
   const {
     data: navigatedUserPosts,
     setData: setNavigatedUserPosts,
-    isLoading: postsLoading,
+    isLoading: navigatedUserPostsLoading,
     error: postError,
   } = useGetUserPosts(userID || "");
 
@@ -140,14 +141,16 @@ const UserPage = () => {
         <PostFilter />
       </Box>
       <Box display="flex" flexDirection="column" gap="4px" mt={"16px"}>
-        {navigatedUserPosts &&
-          navigatedUserPosts.map((post, i) => (
-            <PostListItem
-              post={post}
-              key={i}
-              onClick={() => navigate(`/post/${post.id}`)}
-            ></PostListItem>
-          ))}
+        {navigatedUserPostsLoading
+          ? [1, 2, 3].map((i) => <PostListItemSkeleton key={i} />)
+          : navigatedUserPosts &&
+            navigatedUserPosts.map((post, i) => (
+              <PostListItem
+                post={post}
+                key={i}
+                onClick={() => navigate(`/post/${post.id}`)}
+              ></PostListItem>
+            ))}
       </Box>
     </Box>
   );
