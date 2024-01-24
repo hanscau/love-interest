@@ -13,7 +13,7 @@ import PostInteract from "components/PostInteract";
 import ReplyInput from "components/ReplyInput";
 import CommentListItem from "components/CommentListItem";
 import { useAppSelector } from "hooks/useRedux";
-import { useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ContentType } from "model/Post";
 import { getCurrentUser } from "features/user/userSlice";
@@ -21,6 +21,7 @@ import ReplyListItem from "components/ReplyListItem";
 import {
   useGetPost,
   useGetPostComments,
+  useGetUserInterests,
   usePostComment,
   usePostInterest,
   usePostReply,
@@ -32,7 +33,12 @@ const PostPage = () => {
   const { postID } = useParams<{ postID: string }>();
 
   const [userComment, setUserComment] = useState("");
+  const [isInterested, setIsInterested] = useState(false);
   const currentUser = useAppSelector(getCurrentUser);
+
+  const { data: userInterest, setData: setUserInterest } = useGetUserInterests(
+    currentUser?.id.toString() || ""
+  );
 
   const { data: post, isLoading: isPostLoading } = useGetPost(postID || "");
 
@@ -43,6 +49,16 @@ const PostPage = () => {
   const sendPostComment = usePostComment();
   const sendPostReply = usePostReply();
   const sendInterest = usePostInterest();
+
+  console.log(userInterest, post?.user.id.toString());
+
+  useEffect(() => {
+    setIsInterested(
+      userInterest?.some((interest) => {
+        return interest.recipient_id.toString() === post?.user.id.toString();
+      }) || false
+    );
+  }, [userInterest, post]);
 
   const onPostComment = () => {
     if (userComment === "" || currentUser == null || postID === undefined)
@@ -96,6 +112,7 @@ const PostPage = () => {
     })
       .then((res) => {
         console.log(res.data);
+        setUserInterest([...userInterest!, res.data]);
       })
       .catch((err) => {});
   };
@@ -187,18 +204,30 @@ const PostPage = () => {
                 </Box>
               )
             )}
-            {currentUser && post && currentUser.id !== post.user.id && (
-              <Button
-                variant="contained"
-                endIcon={<Favorite />}
-                onClick={() => onShowInterest(post.user.id)}
-                sx={{
-                  background: theme.palette.primaryGradient,
-                }}
-              >
-                Show Interest
-              </Button>
-            )}
+            {currentUser &&
+              post &&
+              currentUser.id !== post.user.id &&
+              (isInterested ? (
+                <Button
+                  variant="outlined"
+                  endIcon={<Favorite />}
+                  disabled
+                  onClick={() => onShowInterest(post.user.id)}
+                >
+                  Interest Shown
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  endIcon={<Favorite />}
+                  onClick={() => onShowInterest(post.user.id)}
+                  sx={{
+                    background: theme.palette.primaryGradient,
+                  }}
+                >
+                  Show Interest
+                </Button>
+              ))}
           </Box>
           <Box sx={{ flex: "1 1 auto" }}></Box>
           {post && !isPostLoading && <PostInteract post={post}></PostInteract>}

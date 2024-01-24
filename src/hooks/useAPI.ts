@@ -82,6 +82,13 @@ export const useGetTopicPosts = (topicId: string) => {
   return useGetAPI<Post[]>(API_JOINER("posts", "topic", topicId));
 };
 
+export const useGetUserInterests = (userId: string) => {
+  return useGetAPI<{ sender_id: string; recipient_id: string }[]>(
+    API_JOINER("interest_relations", userId),
+    true
+  );
+};
+
 export const useGetUserPosts = (userId: string) => {
   return useGetAPI<Post[]>(API_JOINER("posts", "user", userId));
 };
