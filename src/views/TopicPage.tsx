@@ -32,16 +32,10 @@ const TopicPage = () => {
     }
   };
 
-  const {
-    data: topic,
-    isLoading: topicLoading,
-    error,
-  } = useGetTopic(topicID || "");
-  const {
-    data: posts,
-    isLoading: postsLoading,
-    error: postsError,
-  } = useGetTopicPosts(topicID || "");
+  const { data: topic, isLoading: topicLoading } = useGetTopic(topicID || "");
+  const { data: posts, isLoading: postsLoading } = useGetTopicPosts(
+    topicID || ""
+  );
 
   return (
     <Box flex={1}>

@@ -13,8 +13,6 @@ import { useState } from "react";
 import ReplyInput from "./ReplyInput";
 import { useAppSelector } from "hooks/useRedux";
 import { getCurrentUser } from "features/user/userSlice";
-import axios from "axios";
-import { API_URL } from "util/url";
 
 export interface CommentProps extends BoxProps {
   comment: Comment;

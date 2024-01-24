@@ -2,16 +2,11 @@ import {
   Avatar,
   Box,
   BoxProps,
-  Button,
   Paper,
   Typography,
   useTheme,
 } from "@mui/material";
 import LikeInteract, { ContentType } from "./LikeInteract";
-import { Component, useState } from "react";
-import ReplyInput from "./ReplyInput";
-import { useAppSelector } from "hooks/useRedux";
-import { getCurrentUser } from "features/user/userSlice";
 import Reply from "model/Reply";
 
 export interface ReplyListItemProps extends BoxProps {

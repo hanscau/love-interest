@@ -14,7 +14,7 @@ import ReplyInput from "components/ReplyInput";
 import CommentListItem from "components/CommentListItem";
 import { useAppSelector } from "hooks/useRedux";
 import { useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ContentType } from "model/Post";
 import { getCurrentUser } from "features/user/userSlice";
 import ReplyListItem from "components/ReplyListItem";
@@ -34,18 +34,11 @@ const PostPage = () => {
   const [userComment, setUserComment] = useState("");
   const currentUser = useAppSelector(getCurrentUser);
 
-  const {
-    data: post,
-    isLoading: isPostLoading,
-    error: postError,
-  } = useGetPost(postID || "");
+  const { data: post, isLoading: isPostLoading } = useGetPost(postID || "");
 
-  const {
-    data: comments,
-    setData: setComments,
-    isLoading: isCommentsLoading,
-    error: commentsError,
-  } = useGetPostComments(postID || "");
+  const { data: comments, setData: setComments } = useGetPostComments(
+    postID || ""
+  );
 
   const sendPostComment = usePostComment();
   const sendPostReply = usePostReply();

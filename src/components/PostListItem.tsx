@@ -1,8 +1,6 @@
-import { ThumbUp } from "@mui/icons-material";
-import { Avatar, Box, IconButton, Typography, useTheme } from "@mui/material";
+import { Avatar, Box, Typography, useTheme } from "@mui/material";
 import Post, { ContentType } from "model/Post";
 import PostInteract from "./PostInteract";
-import HTMLImage from "./HTMLImage";
 import { useNavigate } from "react-router-dom";
 
 interface PostListItemProps {

@@ -1,13 +1,7 @@
-import { Box, Button, Modal, Paper, Typography, useTheme } from "@mui/material";
+import { Box, Button, Modal, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 import TextInput from "./TextInput";
-import {
-  AccountCircle,
-  Opacity,
-  Password,
-  Person,
-  Phone,
-} from "@mui/icons-material";
+import { AccountCircle, Password, Person, Phone } from "@mui/icons-material";
 import axios from "axios";
 import { useAppDispatch } from "hooks/useRedux";
 import User from "model/User";

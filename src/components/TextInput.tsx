@@ -3,7 +3,6 @@ import {
   BoxProps,
   InputBase,
   Paper,
-  PaperProps,
   Typography,
   useTheme,
 } from "@mui/material";
