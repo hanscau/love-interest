@@ -59,10 +59,10 @@ const useAPI = <T>(
   return { data, isLoading, error };
 };
 
-export const useAllPosts = (): API_Data<Post[]> => {
+export const useGetAllPosts = (): API_Data<Post[]> => {
   return useAPI<Post[]>(API_JOINER("posts"), "GET");
 };
 
-export const useAllTopics = (): API_Data<Topic[]> => {
+export const useGetAllTopics = (): API_Data<Topic[]> => {
   return useAPI<Topic[]>(API_JOINER("topics"), "GET");
 };

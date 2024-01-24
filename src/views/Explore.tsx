@@ -9,7 +9,7 @@ import {
 import PostListItem from "components/PostListItem";
 import TextInput from "components/TextInput";
 import { useNavigate } from "react-router-dom";
-import { useAllPosts, useAllTopics } from "hooks/useAPI";
+import { useGetAllPosts, useGetAllTopics } from "hooks/useAPI";
 import PostListItemSkeleton from "components/skeletons/PostLitsItemSkeleton";
 import TopicListItem from "components/TopicListItem";
 import TopicListSkeleton from "components/skeletons/TopicListSkeleton";
@@ -36,12 +36,12 @@ const Explore = () => {
     data: posts,
     isLoading: isPostLoading,
     error: postError,
-  } = useAllPosts();
+  } = useGetAllPosts();
   const {
     data: topics,
     isLoading: isTopicLoading,
     error: topicError,
-  } = useAllTopics();
+  } = useGetAllTopics();
 
   return (
     <Box sx={{ flex: 1 }}>
