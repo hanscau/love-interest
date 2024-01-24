@@ -24,6 +24,15 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
   const [lastName, setLastName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const reset = () => {
+    setFirstName("");
+    setLastName("");
+    setUsername("");
+    setPassword("");
+    setConfirmPassword("");
+    setIsRegister(false);
+  };
+
   const onLogin = () => {
     axios
       .post(`${API_URL}/auth/login`, { username, password })
@@ -35,7 +44,9 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => {});
+      .finally(() => {
+        reset();
+      });
   };
 
   const onRegister = () => {
@@ -52,12 +63,14 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => {});
+      .finally(() => {
+        reset();
+      });
   };
 
   const close = () => {
     closeLoginModal();
-    setIsRegister(false);
+    reset();
   };
 
   return (
