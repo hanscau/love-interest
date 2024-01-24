@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "hooks/useRedux";
 import { API_URL } from "util/url";
-import { useGetUser, useGetUserPosts } from "hooks/useAPI";
+import { useGetUser, useGetUserPosts, usePostInterest } from "hooks/useAPI";
 import PostListItemSkeleton from "components/skeletons/PostLitsItemSkeleton";
 import { useSearch } from "hooks/useSearch";
 
@@ -35,6 +35,8 @@ const UserPage = () => {
 
   const [isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
 
+  const sendInterest = usePostInterest();
+
   const onLogout = () => {
     dispatch(logout());
     navigate("/");
@@ -42,6 +44,18 @@ const UserPage = () => {
 
   const onProfileUpdate = () => {
     dispatch(openUpdateModal());
+  };
+
+  const onShowInterest = (recipientId: number) => {
+    if (currentUser === null) return;
+    sendInterest({
+      sender_id: currentUser?.id,
+      recipient_id: recipientId,
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {});
   };
 
   const {
@@ -126,6 +140,7 @@ const UserPage = () => {
                 variant="contained"
                 endIcon={<Favorite />}
                 sx={{ background: theme.palette.primaryGradient }}
+                onClick={() => onShowInterest(navigatedUser?.id || 0)}
               >
                 Show Interest
               </Button>
