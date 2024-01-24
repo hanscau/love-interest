@@ -1,8 +1,9 @@
 import { ThumbUp } from "@mui/icons-material";
-import { Avatar, Box, Typography, useTheme } from "@mui/material";
+import { Avatar, Box, IconButton, Typography, useTheme } from "@mui/material";
 import Post, { ContentType } from "model/Post";
 import PostInteract from "./PostInteract";
 import HTMLImage from "./HTMLImage";
+import { useNavigate } from "react-router-dom";
 
 interface PostListItemProps {
   post: Post;
@@ -11,14 +12,15 @@ interface PostListItemProps {
 
 const PostListItem = ({ post, onClick }: PostListItemProps) => {
   const theme = useTheme();
+  const navigate = useNavigate();
+
   return (
-    <Box
-      display={"flex"}
-      gap="16px"
-      onClick={onClick}
-      sx={{ cursor: "pointer" }}
-    >
-      <Avatar src={post.user.profileImageURL}></Avatar>
+    <Box display={"flex"} gap="16px">
+      <Avatar
+        src={post.user.profileImageURL}
+        onClick={() => navigate(`/user/${post.user.id}`)}
+        sx={{ cursor: "pointer" }}
+      ></Avatar>
       <Box
         bgcolor={"white"}
         borderRadius={"6px"}
@@ -26,6 +28,13 @@ const PostListItem = ({ post, onClick }: PostListItemProps) => {
         gap={"12px"}
         display="flex"
         flex={1}
+        boxShadow={theme.shadows[1]}
+        onClick={onClick}
+        sx={{
+          transition: "all 0.2s ease-in-out",
+          cursor: "pointer",
+          "&:hover": { boxShadow: theme.shadows[6] },
+        }}
       >
         {post.contentType === ContentType.IMAGE && (
           <Box

@@ -1,5 +1,6 @@
 import { Box, Grid, Typography } from "@mui/material";
 import Topic from "model/Topic";
+import { theme } from "util/theme";
 
 const TopicListItem = ({
   topic,
@@ -22,6 +23,9 @@ const TopicListItem = ({
           justifyContent: "flex-start",
           position: "relative",
           cursor: "pointer",
+          boxShadow: theme.shadows[1],
+          transition: "all 0.2s ease-in-out",
+          "&:hover": { transform: "scale(1.05)", boxShadow: theme.shadows[6] },
         }}
       >
         <Box
