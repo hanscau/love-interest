@@ -36,7 +36,7 @@ const ReplyInput = ({
         onSubmit={submit}
         sx={{
           fontWeight: 700,
-          color: theme.palette.secondary.dark,
+          color: theme.palette.black,
           flex: "1 1 auto",
         }}
       ></TextInput>

@@ -1,5 +1,18 @@
 import { createTheme } from "@mui/material";
 
+declare module "@mui/material/styles" {
+  interface Palette {
+    black: string;
+    lightBlue: string;
+    primaryGradient: string;
+  }
+  interface PaletteOptions {
+    black: string;
+    lightBlue: string;
+    primaryGradient: string;
+  }
+}
+
 export const theme = createTheme({
   shadows: [
     "none",
@@ -29,13 +42,18 @@ export const theme = createTheme({
     "0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)",
   ],
   palette: {
+    black: "#353553",
+    lightBlue: "#CCABFF",
+    primaryGradient: "linear-gradient(262deg, #EC5627 0%, #FC2126 100%)",
     primary: {
-      light: "linear-gradient(262deg, #EC5627 0%, #FC2126 100%)",
-      main: "#F8566D",
+      light: "#F8566D",
+      main: "#EC5627",
     },
     secondary: {
+      light: "#d4b9fc",
       main: "#CCABFF",
-      dark: "#353553",
+      dark: "#8967bd",
+      contrastText: "#fff",
     },
   },
 });

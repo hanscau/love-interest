@@ -36,7 +36,7 @@ const ParagraphInput = ({
     >
       <InputBase
         placeholder={placeholder}
-        sx={{ color: theme.palette.secondary.dark }}
+        sx={{ color: theme.palette.black }}
         multiline
         value={value}
         onChange={onChange}

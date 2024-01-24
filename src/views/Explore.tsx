@@ -20,7 +20,7 @@ const Header = (props: TypographyProps) => {
     <Typography
       fontWeight={700}
       fontSize={"20px"}
-      sx={{ color: theme.palette.secondary.dark }}
+      sx={{ color: theme.palette.black }}
       {...props}
     >
       {props.children}
@@ -46,9 +46,7 @@ const Explore = () => {
   return (
     <Box sx={{ flex: 1 }}>
       <TextInput
-        InputIcon={
-          <Search sx={{ color: theme.palette.secondary.dark, mr: "8px" }} />
-        }
+        InputIcon={<Search sx={{ color: theme.palette.black, mr: "8px" }} />}
         sx={{ mt: "8px" }}
         placeholder="Search"
       ></TextInput>

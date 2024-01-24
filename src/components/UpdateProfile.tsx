@@ -112,17 +112,13 @@ const UpdateProfile = ({ isOpen, closeLoginModal }: UpdateProfileProps) => {
         }}
       >
         <Typography
-          color={theme.palette.secondary.dark}
+          color={theme.palette.black}
           fontWeight={700}
           fontSize={"20px"}
         >
           Update Profile
         </Typography>
-        <Typography
-          color={theme.palette.secondary.dark}
-          fontSize={"12px"}
-          mb={"22px"}
-        >
+        <Typography color={theme.palette.black} fontSize={"12px"} mb={"22px"}>
           Stay updated to attract your next match
         </Typography>
         <Box display={"flex"} alignItems={"center"} gap={"12px"} mb={"22px"}>
@@ -156,7 +152,7 @@ const UpdateProfile = ({ isOpen, closeLoginModal }: UpdateProfileProps) => {
                   },
                 }}
               >
-                <Edit sx={{ color: theme.palette.secondary.dark }} />
+                <Edit sx={{ color: theme.palette.black }} />
               </Box>
             </Box>
           </label>
@@ -179,9 +175,7 @@ const UpdateProfile = ({ isOpen, closeLoginModal }: UpdateProfileProps) => {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               InputIcon={
-                <Person
-                  sx={{ color: theme.palette.secondary.dark, mr: "12px" }}
-                />
+                <Person sx={{ color: theme.palette.black, mr: "12px" }} />
               }
             ></TextInput>
             <TextInput
@@ -206,9 +200,7 @@ const UpdateProfile = ({ isOpen, closeLoginModal }: UpdateProfileProps) => {
           value={phoneNo}
           onChange={(e) => setPhoneNo(e.target.value)}
           sx={{ mb: "12px" }}
-          InputIcon={
-            <Phone sx={{ color: theme.palette.secondary.dark, mr: "12px" }} />
-          }
+          InputIcon={<Phone sx={{ color: theme.palette.black, mr: "12px" }} />}
         ></TextInput>
         <ParagraphInput
           placeholder="Bio"

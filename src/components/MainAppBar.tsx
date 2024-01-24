@@ -1,5 +1,14 @@
 import { Add, Loyalty } from "@mui/icons-material";
-import { AppBar, Avatar, Box, Button, Toolbar, useTheme } from "@mui/material";
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  IconButton,
+  Toolbar,
+  Tooltip,
+  useTheme,
+} from "@mui/material";
 import Logo from "./Logo";
 import { useAppSelector } from "hooks/useRedux";
 import { getCurrentUser } from "features/user/userSlice";
@@ -12,46 +21,62 @@ interface MainAppBarProps {
 const MainAppBar = ({ openLoginModal }: MainAppBarProps) => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const user = useAppSelector(getCurrentUser);
+  const currentUser = useAppSelector(getCurrentUser);
 
   const onCreatePostClick = () => {
-    if (user === null) {
+    if (currentUser === null) {
       openLoginModal();
     } else {
       navigate("/post/create");
     }
   };
 
-  const onProfileClick = () => {
-    if (user === null) {
+  const onInterestClick = () => {
+    if (currentUser === null) {
       openLoginModal();
     } else {
-      navigate(`/user/${user.id}`);
+      navigate("/interest");
+    }
+  };
+
+  const onProfileClick = () => {
+    if (currentUser === null) {
+      openLoginModal();
+    } else {
+      navigate(`/user/${currentUser.id}`);
     }
   };
 
   return (
-    <AppBar position="static" color="transparent" sx={{ boxShadow: "none" }}>
+    <AppBar
+      position="static"
+      color="transparent"
+      sx={{ boxShadow: "none", p: "8px 0px" }}
+    >
       <Toolbar disableGutters>
         <Logo onClick={() => navigate("/")}></Logo>
         <Box flex="1 1"></Box>
-        <Box display={"flex"} gap={"14px"} alignItems={"center"}>
-          <Button
-            variant="contained"
-            endIcon={<Add />}
-            onClick={() => onCreatePostClick()}
-            sx={{
-              background: theme.palette.secondary.light,
-            }}
-          >
-            Share
-          </Button>
-          <Loyalty
-            onClick={() => navigate("/interest")}
-            fontSize="large"
-            sx={{ color: "#CCABFF" }}
-          ></Loyalty>
-          <Avatar onClick={() => onProfileClick()}></Avatar>
+        <Box display={"flex"} gap={"8px"} alignItems={"center"}>
+          <Tooltip title="Create Post">
+            <Button
+              variant="contained"
+              endIcon={<Add />}
+              onClick={() => onCreatePostClick()}
+              color="secondary"
+            >
+              Share
+            </Button>
+          </Tooltip>
+          <Tooltip title="My Interest">
+            <IconButton onClick={() => onInterestClick()}>
+              <Loyalty fontSize="large" color="secondary"></Loyalty>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="My Profile">
+            <IconButton onClick={() => onProfileClick()}>
+              <Avatar src={currentUser?.profileImageURL}></Avatar>
+            </IconButton>
+          </Tooltip>
         </Box>
       </Toolbar>
     </AppBar>

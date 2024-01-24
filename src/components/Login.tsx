@@ -87,17 +87,13 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
         }}
       >
         <Typography
-          color={theme.palette.secondary.dark}
+          color={theme.palette.black}
           fontWeight={700}
           fontSize={"20px"}
         >
           {isRegister ? "Register" : "Login/Register"}
         </Typography>
-        <Typography
-          color={theme.palette.secondary.dark}
-          fontSize={"12px"}
-          mb={"22px"}
-        >
+        <Typography color={theme.palette.black} fontSize={"12px"} mb={"22px"}>
           Join the community, find your love interest
         </Typography>
         <Box
@@ -112,9 +108,7 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             InputIcon={
-              <AccountCircle
-                sx={{ color: theme.palette.secondary.dark, mr: "12px" }}
-              />
+              <AccountCircle sx={{ color: theme.palette.black, mr: "12px" }} />
             }
           ></TextInput>
           {isRegister && (
@@ -124,9 +118,7 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 InputIcon={
-                  <Person
-                    sx={{ color: theme.palette.secondary.dark, mr: "12px" }}
-                  />
+                  <Person sx={{ color: theme.palette.black, mr: "12px" }} />
                 }
               ></TextInput>
               <TextInput
@@ -142,9 +134,7 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             InputIcon={
-              <Password
-                sx={{ color: theme.palette.secondary.dark, mr: "12px" }}
-              />
+              <Password sx={{ color: theme.palette.black, mr: "12px" }} />
             }
           ></TextInput>
           {isRegister && (
@@ -154,9 +144,7 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               InputIcon={
-                <Password
-                  sx={{ color: theme.palette.secondary.dark, mr: "12px" }}
-                />
+                <Password sx={{ color: theme.palette.black, mr: "12px" }} />
               }
             ></TextInput>
           )}
@@ -166,7 +154,7 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
             variant="contained"
             size="large"
             onClick={() => onRegister()}
-            sx={{ background: theme.palette.secondary.light }}
+            color="secondary"
           >
             Register
           </Button>
@@ -174,8 +162,8 @@ const Login = ({ isOpen, closeLoginModal }: LoginProps) => {
             <Button
               variant="contained"
               size="large"
+              color="primary"
               onClick={() => onLogin()}
-              sx={{ background: theme.palette.primary.light }}
             >
               Login
             </Button>

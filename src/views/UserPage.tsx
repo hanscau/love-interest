@@ -96,7 +96,7 @@ const UserPage = () => {
                     },
                   }}
                 >
-                  <Edit sx={{ color: theme.palette.secondary.dark }} />
+                  <Edit sx={{ color: theme.palette.black }} />
                 </Box>
               )}
             </Box>
@@ -104,14 +104,11 @@ const UserPage = () => {
               <Typography
                 fontSize={"20px"}
                 fontWeight={700}
-                color={theme.palette.secondary.dark}
+                color={theme.palette.black}
               >
                 {currentUser?.firstName} {currentUser?.lastName}
               </Typography>
-              <Typography
-                fontSize={"12px"}
-                color={theme.palette.secondary.dark}
-              >
+              <Typography fontSize={"12px"} color={theme.palette.black}>
                 {userPosts.length} posts
               </Typography>
             </Box>
@@ -120,7 +117,7 @@ const UserPage = () => {
           {isCurrentUser ? (
             <Button
               onClick={() => onLogout()}
-              sx={{ color: theme.palette.secondary.dark }}
+              sx={{ color: theme.palette.black }}
             >
               Logout
             </Button>
@@ -142,9 +139,7 @@ const UserPage = () => {
         <TextInput
           placeholder="Search"
           sx={{ flex: "1" }}
-          InputIcon={
-            <Search sx={{ color: theme.palette.secondary.dark, mr: "12px" }} />
-          }
+          InputIcon={<Search sx={{ color: theme.palette.black, mr: "12px" }} />}
         ></TextInput>
         <PostFilter />
       </Box>

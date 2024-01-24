@@ -97,7 +97,7 @@ const CreatePost = () => {
     <Box>
       <Typography
         fontSize={"22px"}
-        color={theme.palette.secondary.dark}
+        color={theme.palette.black}
         fontWeight={700}
         mb={"22px"}
       >

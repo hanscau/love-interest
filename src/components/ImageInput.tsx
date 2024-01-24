@@ -56,11 +56,11 @@ const ImageInput = ({
           >
             <DeleteForever
               fontSize="large"
-              sx={{ color: theme.palette.secondary.dark }}
+              sx={{ color: theme.palette.black }}
             />
 
             <Typography
-              color={theme.palette.secondary.dark}
+              color={theme.palette.black}
               fontWeight={700}
               fontSize={"28px"}
             >
@@ -78,12 +78,9 @@ const ImageInput = ({
             gap={"12px"}
             sx={{ cursor: "pointer" }}
           >
-            <Image
-              fontSize="large"
-              sx={{ color: theme.palette.secondary.dark }}
-            />
+            <Image fontSize="large" sx={{ color: theme.palette.black }} />
             <Typography
-              color={theme.palette.secondary.dark}
+              color={theme.palette.black}
               fontWeight={700}
               fontSize={"28px"}
             >

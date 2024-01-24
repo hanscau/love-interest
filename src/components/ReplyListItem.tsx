@@ -28,18 +28,14 @@ const ReplyListItem = (props: ReplyListItemProps) => {
       <Box>
         <Box display={"flex"} alignItems={"flex-end"} mb={"8px"}>
           <Typography
-            color={theme.palette.secondary.dark}
+            color={theme.palette.black}
             fontWeight={700}
             fontSize={"16px"}
             mr={"8px"}
           >
             {reply.user.firstName} {reply.user.lastName}
           </Typography>
-          <Typography
-            color={theme.palette.secondary.dark}
-            fontSize={"10px"}
-            mb={"3px"}
-          >
+          <Typography color={theme.palette.black} fontSize={"10px"} mb={"3px"}>
             {reply.created_at}
           </Typography>
         </Box>

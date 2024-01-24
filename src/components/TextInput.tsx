@@ -38,7 +38,7 @@ const TextInput = ({
       {InputIcon ? InputIcon : <Box sx={{ width: "8px" }}></Box>}
       <InputBase
         placeholder={placeholder}
-        sx={{ fontWeight: bold ? 700 : 0, color: theme.palette.secondary.dark }}
+        sx={{ fontWeight: bold ? 700 : 0, color: theme.palette.black }}
         type={type ? type : "text"}
         value={value}
         onChange={onChange}

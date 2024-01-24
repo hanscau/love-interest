@@ -19,7 +19,7 @@ const Tag = ({ tag, deletable, onDelete = () => null }: TagProps) => {
       gap={"4px"}
       sx={{
         background: theme.palette.secondary.light,
-        borderColor: theme.palette.secondary.dark,
+        borderColor: theme.palette.black,
         borderWidth: "1.7px",
         borderStyle: "solid",
       }}

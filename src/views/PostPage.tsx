@@ -120,14 +120,11 @@ const PostPage = () => {
               <Typography
                 fontWeight={700}
                 fontSize={"20px"}
-                color={theme.palette.secondary.dark}
+                color={theme.palette.black}
               >
                 {post.title}
               </Typography>
-              <Typography
-                fontSize={"12px"}
-                color={theme.palette.secondary.dark}
-              >
+              <Typography fontSize={"12px"} color={theme.palette.black}>
                 {post.topic.topic} | {post.created_at}
               </Typography>
             </Box>
@@ -146,7 +143,7 @@ const PostPage = () => {
             <Typography
               mb={"22px"}
               fontSize={"22px"}
-              color={theme.palette.secondary.dark}
+              color={theme.palette.black}
             >
               {post.content}
             </Typography>
@@ -180,14 +177,11 @@ const PostPage = () => {
                     <Typography
                       fontSize={"20px"}
                       fontWeight={700}
-                      color={theme.palette.secondary.dark}
+                      color={theme.palette.black}
                     >
                       {post.user.firstName} {post.user.lastName}
                     </Typography>
-                    <Typography
-                      fontSize={"12px"}
-                      color={theme.palette.secondary.dark}
-                    >
+                    <Typography fontSize={"12px"} color={theme.palette.black}>
                       Member since {post.user.created_at}
                     </Typography>
                   </Box>

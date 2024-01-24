@@ -93,9 +93,7 @@ const TopicPage = () => {
           sx={{ flex: "1" }}
           placeholder="Search"
           InputIcon={
-            <Search
-              sx={{ color: theme.palette.secondary.dark, mr: "12px" }}
-            ></Search>
+            <Search sx={{ color: theme.palette.black, mr: "12px" }}></Search>
           }
         ></TextInput>
         <PostFilter />

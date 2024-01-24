@@ -39,16 +39,13 @@ const PostListItem = ({ post, onClick }: PostListItemProps) => {
         )}
 
         <Box alignItems={"center"}>
-          <Typography
-            fontWeight={700}
-            sx={{ color: theme.palette.secondary.dark }}
-          >
+          <Typography fontWeight={700} sx={{ color: theme.palette.black }}>
             {post.title}
           </Typography>
           <Typography
             fontSize={"12px"}
             mb={"10px"}
-            sx={{ color: theme.palette.secondary.dark }}
+            sx={{ color: theme.palette.black }}
           >
             {post.topic.topic} / {post.created_at}
           </Typography>

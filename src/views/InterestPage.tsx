@@ -37,10 +37,7 @@ const InterestListItem = ({
     <Paper sx={{ display: "flex", p: "12px", mb: "6px", borderRadius: "16px" }}>
       <Avatar src={user.profileImageURL} sx={{ mr: "12px" }}></Avatar>
       <Box>
-        <Typography
-          fontWeight={700}
-          sx={{ color: theme.palette.secondary.dark }}
-        >
+        <Typography fontWeight={700} sx={{ color: theme.palette.black }}>
           {user.firstName} {user.lastName}
         </Typography>
         <Typography fontSize={"12px"}>
@@ -108,7 +105,7 @@ const InterestPage = () => {
         <Typography
           fontWeight={700}
           fontSize={"18px"}
-          sx={{ color: theme.palette.secondary.dark }}
+          sx={{ color: theme.palette.black }}
         >
           {currentUser?.firstName} {currentUser?.lastName}'s interest
         </Typography>
@@ -122,7 +119,7 @@ const InterestPage = () => {
         fontWeight={700}
         fontSize={"18px"}
         mb={"12px"}
-        sx={{ color: theme.palette.secondary.dark }}
+        sx={{ color: theme.palette.black }}
       >
         Matched Interest
       </Typography>
@@ -135,7 +132,7 @@ const InterestPage = () => {
         fontWeight={700}
         fontSize={"18px"}
         mb={"12px"}
-        sx={{ color: theme.palette.secondary.dark }}
+        sx={{ color: theme.palette.black }}
       >
         Interest Shown
       </Typography>

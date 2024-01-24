@@ -44,7 +44,7 @@ const CommentListItem = (props: CommentProps) => {
         <Box>
           <Box display={"flex"} alignItems={"flex-end"} mb={"8px"}>
             <Typography
-              color={theme.palette.secondary.dark}
+              color={theme.palette.black}
               fontWeight={700}
               fontSize={"16px"}
               mr={"8px"}
@@ -52,7 +52,7 @@ const CommentListItem = (props: CommentProps) => {
               {comment.user.firstName} {comment.user.lastName}
             </Typography>
             <Typography
-              color={theme.palette.secondary.dark}
+              color={theme.palette.black}
               fontSize={"10px"}
               mb={"3px"}
             >
@@ -76,7 +76,7 @@ const CommentListItem = (props: CommentProps) => {
                 size="small"
                 variant="text"
                 sx={{
-                  color: theme.palette.secondary.dark,
+                  color: theme.palette.black,
                   fontSize: "12px",
                   borderRadius: "12px",
                 }}
