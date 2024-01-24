@@ -35,7 +35,9 @@ const InterestListItem = ({
   const theme = useTheme();
 
   return (
-    <Paper sx={{ display: "flex", p: "12px", mb: "6px", borderRadius: "16px" }}>
+    <Paper
+      sx={{ display: "flex", p: "12px 14px", mb: "6px", borderRadius: "16px" }}
+    >
       <Avatar src={user.profileImageURL} sx={{ mr: "12px" }}></Avatar>
       <Box>
         <Typography fontWeight={700} sx={{ color: theme.palette.black }}>
@@ -67,9 +69,6 @@ const InterestListItem = ({
             </Typography>
           </Box>
         )}
-        <IconButton>
-          <Delete color="primary" />
-        </IconButton>
       </Box>
     </Paper>
   );
