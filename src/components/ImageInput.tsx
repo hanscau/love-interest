@@ -6,12 +6,14 @@ interface ImageInputProps extends PaperProps {
   value: File | null;
   deleteImage: () => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  src?: string;
 }
 
 const ImageInput = ({
   sx,
   value,
   deleteImage,
+  src,
   onChange,
   ...rest
 }: ImageInputProps) => {
@@ -33,7 +35,10 @@ const ImageInput = ({
     >
       {value ? (
         <Box position={"relative"}>
-          <HTMLImage src={URL.createObjectURL(value)} alt="User posted image" />
+          <HTMLImage
+            src={src ? src : URL.createObjectURL(value)}
+            alt="User posted image"
+          />
           <Box
             display="flex"
             justifyContent="center"

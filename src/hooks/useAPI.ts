@@ -123,3 +123,13 @@ export const usePostInterest = () => {
     recipient_id: number;
   }>(API_JOINER("interest_relations"));
 };
+
+export const useDeletePost = () => {
+  const currentUser = useAppSelector(getCurrentUser);
+  const deleteRequest = (postId: string) => {
+    return axios.delete(API_JOINER("posts", postId), {
+      headers: { Authorization: `Bearer ${currentUser?.jwt}` },
+    });
+  };
+  return deleteRequest;
+};

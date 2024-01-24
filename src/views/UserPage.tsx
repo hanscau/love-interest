@@ -171,6 +171,8 @@ const UserPage = () => {
                   post={post}
                   key={i}
                   onClick={() => navigate(`/post/${post.id}`)}
+                  edittable={isCurrentUser}
+                  onEdit={(id) => navigate(`/post/edit/${id}`)}
                 ></PostListItem>
               ))}
       </Box>

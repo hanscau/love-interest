@@ -3,6 +3,7 @@ import { getCurrentUser } from "features/user/userSlice";
 import { useAppSelector } from "hooks/useRedux";
 import { useRoutes } from "react-router-dom";
 import CreatePost from "views/CreatePost";
+import EditPost from "views/EditPost";
 import ErrorPage from "views/ErrorPage";
 import Explore from "views/Explore";
 import InterestPage from "views/InterestPage";
@@ -20,6 +21,10 @@ export default function Routes() {
     {
       path: "/post/create",
       element: currentUser ? <CreatePost /> : <ErrorPage />,
+    },
+    {
+      path: "/post/edit/:postID",
+      element: currentUser ? <EditPost /> : <ErrorPage />,
     },
     { path: "/post/:postID", element: <PostPage /> },
     { path: "/topic/:topicID", element: <TopicPage /> },

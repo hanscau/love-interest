@@ -1,14 +1,22 @@
-import { Avatar, Box, Typography, useTheme } from "@mui/material";
+import { Avatar, Box, IconButton, Typography, useTheme } from "@mui/material";
 import Post, { ContentType } from "model/Post";
 import PostInteract from "./PostInteract";
 import { useNavigate } from "react-router-dom";
+import { Edit } from "@mui/icons-material";
 
 interface PostListItemProps {
   post: Post;
   onClick: () => void;
+  onEdit?: (id: number) => void;
+  edittable?: boolean;
 }
 
-const PostListItem = ({ post, onClick }: PostListItemProps) => {
+const PostListItem = ({
+  post,
+  onClick,
+  onEdit,
+  edittable = false,
+}: PostListItemProps) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -21,6 +29,7 @@ const PostListItem = ({ post, onClick }: PostListItemProps) => {
       ></Avatar>
       <Box
         bgcolor={"white"}
+        position={"relative"}
         borderRadius={"6px"}
         p="12px"
         gap={"12px"}
@@ -58,6 +67,23 @@ const PostListItem = ({ post, onClick }: PostListItemProps) => {
           </Typography>
           <PostInteract post={post}></PostInteract>
         </Box>
+        {edittable && (
+          <IconButton
+            sx={{
+              position: "absolute",
+              bottom: "0",
+              right: "0",
+              m: "12px",
+              color: theme.palette.secondary.main,
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit && onEdit(post.id);
+            }}
+          >
+            <Edit sx={{ fontSize: "22px" }} />
+          </IconButton>
+        )}
       </Box>
     </Box>
   );
