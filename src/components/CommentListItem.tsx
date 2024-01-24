@@ -13,6 +13,7 @@ import { useState } from "react";
 import ReplyInput from "./ReplyInput";
 import { useAppSelector } from "hooks/useRedux";
 import { getCurrentUser } from "features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export interface CommentProps extends BoxProps {
   comment: Comment;
@@ -23,6 +24,7 @@ export interface CommentProps extends BoxProps {
 const CommentListItem = (props: CommentProps) => {
   const { onReply, comment, children, ...rest } = props;
   const theme = useTheme();
+  const navigate = useNavigate();
   const currentUser = useAppSelector(getCurrentUser);
 
   const [showReply, setShowReply] = useState<boolean>(false);
@@ -38,7 +40,12 @@ const CommentListItem = (props: CommentProps) => {
   return (
     <Box>
       <Box display={"flex"} gap={"16px"} alignItems={"flex-start"} {...rest}>
-        <Avatar src={comment.user.profileImageURL} />
+        <Box
+          sx={{ cursor: "pointer" }}
+          onClick={() => navigate(`/user/${comment.user.id}`)}
+        >
+          <Avatar src={comment.user.profileImageURL} />
+        </Box>
         <Box>
           <Box display={"flex"} alignItems={"flex-end"} mb={"8px"}>
             <Typography

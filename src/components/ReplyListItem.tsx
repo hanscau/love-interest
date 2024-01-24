@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import LikeInteract, { ContentType } from "./LikeInteract";
 import Reply from "model/Reply";
+import { useNavigate } from "react-router-dom";
 
 export interface ReplyListItemProps extends BoxProps {
   reply: Reply;
@@ -16,10 +17,16 @@ export interface ReplyListItemProps extends BoxProps {
 const ReplyListItem = (props: ReplyListItemProps) => {
   const { reply, ...rest } = props;
   const theme = useTheme();
+  const navigate = useNavigate();
 
   return (
     <Box display={"flex"} gap={"16px"} alignItems={"flex-start"} {...rest}>
-      <Avatar src={reply.user.profileImageURL} />
+      <Box
+        sx={{ cursor: "pointer" }}
+        onClick={() => navigate(`/user/${reply.user.id}`)}
+      >
+        <Avatar src={reply.user.profileImageURL} />
+      </Box>
       <Box>
         <Box display={"flex"} alignItems={"flex-end"} mb={"8px"}>
           <Typography
