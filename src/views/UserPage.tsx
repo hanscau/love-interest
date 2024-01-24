@@ -18,7 +18,7 @@ import Post from "model/Post";
 import User, { emptyUser, mockUsers } from "model/User";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "reduxHooks";
+import { useAppDispatch, useAppSelector } from "hooks/useRedux";
 import { API_URL } from "util/url";
 
 const UserPage = () => {

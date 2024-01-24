@@ -1,6 +1,6 @@
 import { logout } from "features/user/userSlice";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "reduxHooks";
+import { useAppDispatch } from "hooks/useRedux";
 
 const Logout = () => {
   const dispatch = useAppDispatch();

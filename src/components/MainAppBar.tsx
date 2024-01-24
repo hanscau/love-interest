@@ -1,7 +1,7 @@
 import { Add, Loyalty } from "@mui/icons-material";
 import { AppBar, Avatar, Box, Button, Toolbar, useTheme } from "@mui/material";
 import Logo from "./Logo";
-import { useAppSelector } from "reduxHooks";
+import { useAppSelector } from "hooks/useRedux";
 import { getCurrentUser } from "features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 

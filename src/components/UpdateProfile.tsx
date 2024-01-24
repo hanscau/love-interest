@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import TextInput from "./TextInput";
 import { Edit, Person, Phone } from "@mui/icons-material";
 import axios from "axios";
-import { useAppDispatch, useAppSelector } from "reduxHooks";
+import { useAppDispatch, useAppSelector } from "hooks/useRedux";
 import User from "model/User";
 import { getCurrentUser, login } from "features/user/userSlice";
 import { API_URL } from "util/url";

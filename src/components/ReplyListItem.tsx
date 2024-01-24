@@ -10,7 +10,7 @@ import {
 import LikeInteract, { ContentType } from "./LikeInteract";
 import { Component, useState } from "react";
 import ReplyInput from "./ReplyInput";
-import { useAppSelector } from "reduxHooks";
+import { useAppSelector } from "hooks/useRedux";
 import { getCurrentUser } from "features/user/userSlice";
 import Reply from "model/Reply";
 

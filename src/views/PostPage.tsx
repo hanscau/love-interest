@@ -12,7 +12,7 @@ import PostInteract from "components/PostInteract";
 import ReplyInput from "components/ReplyInput";
 import CommentListItem from "components/CommentListItem";
 import Comment from "model/Comment";
-import { useAppSelector } from "reduxHooks";
+import { useAppSelector } from "hooks/useRedux";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";

@@ -9,7 +9,7 @@ import Post from "model/Post";
 import { emptyTopic, mockTopics } from "model/Topic";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAppSelector } from "reduxHooks";
+import { useAppSelector } from "hooks/useRedux";
 import { API_URL } from "util/url";
 
 const TopicPage = () => {

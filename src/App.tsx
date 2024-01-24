@@ -4,7 +4,7 @@ import { Container } from "@mui/material";
 import MainAppBar from "components/MainAppBar";
 import Login from "components/Login";
 import { useSelector } from "react-redux";
-import { useAppDispatch, useAppSelector } from "reduxHooks";
+import { useAppDispatch, useAppSelector } from "hooks/useRedux";
 import {
   closeLoginModal,
   openLoginModal,

@@ -3,7 +3,7 @@ import { useState } from "react";
 import TextInput from "./TextInput";
 import { AccountCircle, Password, Person } from "@mui/icons-material";
 import axios from "axios";
-import { useAppDispatch } from "reduxHooks";
+import { useAppDispatch } from "hooks/useRedux";
 import User from "model/User";
 import { login } from "features/user/userSlice";
 import { API_URL } from "util/url";

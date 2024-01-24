@@ -12,7 +12,7 @@ import TextInput from "components/TextInput";
 import { getCurrentUser } from "features/user/userSlice";
 import User from "model/User";
 import { useEffect, useState } from "react";
-import { useAppSelector } from "reduxHooks";
+import { useAppSelector } from "hooks/useRedux";
 import { API_URL } from "util/url";
 
 interface UserLite {

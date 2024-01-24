@@ -3,7 +3,7 @@ import { Box, BoxProps, IconButton, Typography, useTheme } from "@mui/material";
 import axios from "axios";
 import { getCurrentUser } from "features/user/userSlice";
 import React, { MouseEventHandler, useEffect, useState } from "react";
-import { useAppSelector } from "reduxHooks";
+import { useAppSelector } from "hooks/useRedux";
 import { API_URL } from "util/url";
 
 export enum ContentType {

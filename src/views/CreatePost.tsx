@@ -17,7 +17,7 @@ import { ContentType } from "model/Post";
 import Topic from "model/Topic";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "reduxHooks";
+import { useAppSelector } from "hooks/useRedux";
 import { API_URL } from "util/url";
 
 const CreatePost = () => {
