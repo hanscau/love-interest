@@ -39,11 +39,11 @@ const ReplyListItem = (props: ReplyListItemProps) => {
             {reply.created_at}
           </Typography>
         </Box>
-        <Paper sx={{ p: "12px 16px", borderRadius: "16px" }}>
-          <Typography mb={"10px"} fontSize={"16px"}>
+        <Paper sx={{ p: "12px 16px 8px 8px", borderRadius: "16px" }}>
+          <Typography mb={"10px"} fontSize={"16px"} ml={"16px"}>
             {reply.replyText}
           </Typography>
-          <Box display={"flex"} alignItems={"center"} gap={"8px"}>
+          <Box display={"flex"} alignItems={"center"}>
             <LikeInteract
               fontSize="12px"
               iconSize="14px"
