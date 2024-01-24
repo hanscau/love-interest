@@ -16,6 +16,7 @@ import { useGetTopic, useGetTopicPosts } from "hooks/useAPI";
 import PostListItemSkeleton from "components/skeletons/PostLitsItemSkeleton";
 import { getCurrentUser } from "features/user/userSlice";
 import { openLoginModal } from "features/loginModal/loginModalSlice";
+import { useSearch } from "hooks/useSearch";
 
 const TopicPage = () => {
   const theme = useTheme();
@@ -23,6 +24,8 @@ const TopicPage = () => {
   const dispatch = useAppDispatch();
   const { topicID } = useParams<{ topicID: string }>();
   const currentUser = useAppSelector(getCurrentUser);
+
+  const { search, setSearch, filterPost } = useSearch();
 
   const onNewPost = () => {
     if (currentUser === null) {
@@ -104,6 +107,8 @@ const TopicPage = () => {
         <TextInput
           sx={{ flex: "1" }}
           placeholder="Search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
           InputIcon={
             <Search sx={{ color: theme.palette.black, mr: "12px" }}></Search>
           }
@@ -114,13 +119,15 @@ const TopicPage = () => {
         {postsLoading
           ? [1, 2, 3].map((i) => <PostListItemSkeleton key={i} />)
           : posts &&
-            posts.map((post) => (
-              <PostListItem
-                post={post}
-                key={post.id}
-                onClick={() => navigate(`/post/${post.id}`)}
-              ></PostListItem>
-            ))}
+            posts
+              .filter(filterPost)
+              .map((post) => (
+                <PostListItem
+                  post={post}
+                  key={post.id}
+                  onClick={() => navigate(`/post/${post.id}`)}
+                ></PostListItem>
+              ))}
       </Box>
     </Box>
   );

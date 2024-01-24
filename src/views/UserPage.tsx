@@ -22,6 +22,7 @@ import { useAppDispatch, useAppSelector } from "hooks/useRedux";
 import { API_URL } from "util/url";
 import { useGetUser, useGetUserPosts } from "hooks/useAPI";
 import PostListItemSkeleton from "components/skeletons/PostLitsItemSkeleton";
+import { useSearch } from "hooks/useSearch";
 
 const UserPage = () => {
   const theme = useTheme();
@@ -29,6 +30,8 @@ const UserPage = () => {
   const { userID } = useParams<{ userID: string }>();
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector(getCurrentUser);
+
+  const { search, setSearch, filterPost } = useSearch();
 
   const [isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
 
@@ -136,6 +139,8 @@ const UserPage = () => {
         <TextInput
           placeholder="Search"
           sx={{ flex: "1" }}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
           InputIcon={<Search sx={{ color: theme.palette.black, mr: "12px" }} />}
         ></TextInput>
         <PostFilter />
@@ -144,13 +149,15 @@ const UserPage = () => {
         {navigatedUserPostsLoading
           ? [1, 2, 3].map((i) => <PostListItemSkeleton key={i} />)
           : navigatedUserPosts &&
-            navigatedUserPosts.map((post, i) => (
-              <PostListItem
-                post={post}
-                key={i}
-                onClick={() => navigate(`/post/${post.id}`)}
-              ></PostListItem>
-            ))}
+            navigatedUserPosts
+              .filter(filterPost)
+              .map((post, i) => (
+                <PostListItem
+                  post={post}
+                  key={i}
+                  onClick={() => navigate(`/post/${post.id}`)}
+                ></PostListItem>
+              ))}
       </Box>
     </Box>
   );
