@@ -121,7 +121,11 @@ const TopicPage = () => {
           ? [1, 2, 3].map((i) => <PostListItemSkeleton key={i} />)
           : posts &&
             posts.map((post) => (
-              <PostListItem post={post} key={post.id}></PostListItem>
+              <PostListItem
+                post={post}
+                key={post.id}
+                onClick={() => navigate(`/post/${post.id}`)}
+              ></PostListItem>
             ))}
       </Box>
     </Box>

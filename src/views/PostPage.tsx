@@ -14,7 +14,7 @@ import ReplyInput from "components/ReplyInput";
 import CommentListItem from "components/CommentListItem";
 import { useAppSelector } from "hooks/useRedux";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { ContentType } from "model/Post";
 import { getCurrentUser } from "features/user/userSlice";
 import ReplyListItem from "components/ReplyListItem";
@@ -28,6 +28,7 @@ import {
 
 const PostPage = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { postID } = useParams<{ postID: string }>();
 
   const [userComment, setUserComment] = useState("");
@@ -172,7 +173,12 @@ const PostPage = () => {
             ) : (
               post && (
                 <Box display={"flex"} alignItems={"center"}>
-                  <Avatar sx={{ mr: "16px" }} src={post.user.profileImageURL} />
+                  <Box
+                    sx={{ mr: "16px", cursor: "pointer" }}
+                    onClick={() => navigate(`/user/${post.user.id}`)}
+                  >
+                    <Avatar src={post.user.profileImageURL} />
+                  </Box>
                   <Box mr={"22px"}>
                     <Typography
                       fontSize={"20px"}

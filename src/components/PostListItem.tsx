@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 interface PostListItemProps {
   post: Post;
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 const PostListItem = ({ post, onClick }: PostListItemProps) => {
