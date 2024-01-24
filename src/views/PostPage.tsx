@@ -194,7 +194,7 @@ const PostPage = () => {
                 endIcon={<Favorite />}
                 onClick={() => onShowInterest(post.user.id)}
                 sx={{
-                  background: theme.palette.primary.light,
+                  background: theme.palette.primaryGradient,
                 }}
               >
                 Show Interest
@@ -211,6 +211,7 @@ const PostPage = () => {
           value={userComment}
           user={currentUser}
           onChange={(e) => setUserComment(e.target.value)}
+          onEnter={() => onPostComment()}
           submit={() => onPostComment()}
         ></ReplyInput>
       )}

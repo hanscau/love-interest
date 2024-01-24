@@ -96,6 +96,7 @@ const CommentListItem = (props: CommentProps) => {
         show={showReply}
         value={userReply}
         onChange={(e) => setUserReply(e.target.value)}
+        onEnter={() => submitReply()}
         submit={() => submitReply()}
       />
     </Box>

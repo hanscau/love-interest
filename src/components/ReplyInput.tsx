@@ -5,6 +5,7 @@ import User from "model/User";
 interface ReplyInputProps extends BoxProps {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onEnter?: () => void;
   submit?: () => void;
   user: User | null;
   show?: boolean;
@@ -16,6 +17,7 @@ const ReplyInput = ({
   submit,
   user,
   show = true,
+  onEnter,
   ...rest
 }: ReplyInputProps) => {
   const theme = useTheme();
@@ -34,6 +36,7 @@ const ReplyInput = ({
         value={value}
         onChange={onChange}
         onSubmit={submit}
+        onEnter={onEnter}
         sx={{
           fontWeight: 700,
           color: theme.palette.black,
@@ -43,8 +46,8 @@ const ReplyInput = ({
       <Button
         variant="contained"
         onClick={submit}
+        color="secondary"
         sx={{
-          background: theme.palette.secondary.light,
           px: "32px",
           py: "10px",
           borderRadius: "20px",
