@@ -1,6 +1,39 @@
-# Getting Started with Create React App
+# Getting Started with LoveInterest
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+Written for CVWO submission 2024
+
+## Setup
+
+Tested on WSL Ubuntu 22.04.3 (Jammy Jellyfish), Node v16.14.0
+
+Clone repository
+
+```bash
+gh repo clone hanscau/love-interest
+```
+
+Install dependencies
+
+```bash
+cd love-interest
+yarn
+```
+
+Update URL file to point to backend (Love-interest-api will run on port 3001)
+
+```bash
+# love-interest/src/util/url.ts
+
+export const API_URL = "http://localhost:3001";
+```
+
+Start frontend
+
+```bash
+yarn run start
+```
 
 ## Available Scripts
 
