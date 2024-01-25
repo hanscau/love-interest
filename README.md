@@ -2,7 +2,9 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Written for CVWO submission 2024
+Frontend will not work without Rails backend: [LoveInterest API](https://github.com/hanscau/love-interest-api)
+
+Written for 2024 CVWO submission
 
 ## Setup
 
