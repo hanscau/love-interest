@@ -8,7 +8,6 @@ import {
   useTheme,
 } from "@mui/material";
 import PostListItem from "components/PostListItem";
-import PostFilter from "components/PostsFilter";
 import TextInput from "components/TextInput";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "hooks/useRedux";
@@ -113,7 +112,6 @@ const TopicPage = () => {
             <Search sx={{ color: theme.palette.black, mr: "12px" }}></Search>
           }
         ></TextInput>
-        <PostFilter />
       </Box>
       <Box display="flex" flexDirection="column" gap="4px" mt={"16px"}>
         {postsLoading

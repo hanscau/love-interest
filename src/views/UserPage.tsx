@@ -7,19 +7,13 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import axios from "axios";
 import PostListItem from "components/PostListItem";
-import PostFilter from "components/PostsFilter";
 import TextInput from "components/TextInput";
-import { openLoginModal } from "features/loginModal/loginModalSlice";
 import { openUpdateModal } from "features/updateModal/updateModalSlice";
 import { getCurrentUser, logout } from "features/user/userSlice";
-import Post from "model/Post";
-import User, { emptyUser, mockUsers } from "model/User";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "hooks/useRedux";
-import { API_URL } from "util/url";
 import {
   useGetUser,
   useGetUserInterests,
@@ -185,7 +179,6 @@ const UserPage = () => {
           onChange={(e) => setSearch(e.target.value)}
           InputIcon={<Search sx={{ color: theme.palette.black, mr: "12px" }} />}
         ></TextInput>
-        <PostFilter />
       </Box>
       <Box display="flex" flexDirection="column" gap="4px" mt={"16px"}>
         {navigatedUserPostsLoading
