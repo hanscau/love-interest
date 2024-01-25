@@ -208,12 +208,7 @@ const PostPage = () => {
               post &&
               currentUser.id !== post.user.id &&
               (isInterested ? (
-                <Button
-                  variant="outlined"
-                  endIcon={<Favorite />}
-                  disabled
-                  onClick={() => onShowInterest(post.user.id)}
-                >
+                <Button variant="outlined" endIcon={<Favorite />} disabled>
                   Interest Shown
                 </Button>
               ) : (

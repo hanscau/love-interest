@@ -47,7 +47,7 @@ const useGetAPI = <T>(url: string, withLogin: boolean = false) => {
         ? { Authorization: `Bearer ${currentUser.jwt}` }
         : {};
     request({ headers });
-  }, [currentUser]);
+  }, [currentUser, url]);
 
   return { data, setData, isLoading, error };
 };

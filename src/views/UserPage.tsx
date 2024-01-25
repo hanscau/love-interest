@@ -20,7 +20,12 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "hooks/useRedux";
 import { API_URL } from "util/url";
-import { useGetUser, useGetUserPosts, usePostInterest } from "hooks/useAPI";
+import {
+  useGetUser,
+  useGetUserInterests,
+  useGetUserPosts,
+  usePostInterest,
+} from "hooks/useAPI";
 import PostListItemSkeleton from "components/skeletons/PostLitsItemSkeleton";
 import { useSearch } from "hooks/useSearch";
 
@@ -34,8 +39,13 @@ const UserPage = () => {
   const { search, setSearch, filterPost } = useSearch();
 
   const [isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
+  const [isInterested, setIsInterested] = useState(false);
 
   const sendInterest = usePostInterest();
+
+  const { data: userInterest, setData: setUserInterest } = useGetUserInterests(
+    currentUser?.id.toString() || ""
+  );
 
   const onLogout = () => {
     dispatch(logout());
@@ -54,6 +64,7 @@ const UserPage = () => {
     })
       .then((res) => {
         console.log(res.data);
+        setUserInterest([...userInterest!, res.data]);
       })
       .catch((err) => {});
   };
@@ -73,6 +84,16 @@ const UserPage = () => {
   } = useGetUserPosts(userID || "");
 
   console.log(navigatedUser);
+
+  useEffect(() => {
+    setIsInterested(
+      userInterest?.some((interest) => {
+        return (
+          interest.recipient_id.toString() === navigatedUser?.id.toString()
+        );
+      }) || false
+    );
+  }, [userInterest, navigatedUser]);
 
   useEffect(() => {
     if (currentUser && navigatedUser && navigatedUser.id === currentUser.id) {
@@ -135,12 +156,18 @@ const UserPage = () => {
               >
                 Logout
               </Button>
+            ) : isInterested ? (
+              <Button variant="outlined" endIcon={<Favorite />} disabled>
+                Interest Shown
+              </Button>
             ) : (
               <Button
                 variant="contained"
                 endIcon={<Favorite />}
-                sx={{ background: theme.palette.primaryGradient }}
                 onClick={() => onShowInterest(navigatedUser?.id || 0)}
+                sx={{
+                  background: theme.palette.primaryGradient,
+                }}
               >
                 Show Interest
               </Button>
