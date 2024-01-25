@@ -81,7 +81,9 @@ const EditPost = () => {
     formData.append("content", content);
     formData.append("contentType", contentType.toString());
     formData.append("tags", tags.join("#"));
-    image && formData.append("image", image as Blob, image?.name);
+    if (image?.name !== "empty_file") {
+      image && formData.append("image", image as Blob, image?.name);
+    }
 
     console.log(formData);
 
@@ -104,9 +106,7 @@ const EditPost = () => {
     setTitle(post?.title || "");
     setTopic(post?.topic || null);
     setContent(post?.content || "");
-    setImage(
-      post?.contentImageURL ? new File([], post?.contentImageURL) : null
-    );
+    setImage(post?.contentImageURL ? new File([], "empty_file") : null);
     setSrc(post?.contentImageURL || "");
     setTags(post?.tags.split("#") || []);
   }, [post]);
