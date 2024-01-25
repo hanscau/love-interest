@@ -72,6 +72,7 @@ const UpdateProfile = ({ isOpen, closeLoginModal }: UpdateProfileProps) => {
       .then((res) => {
         console.log(res.data);
         dispatch(login({ jwt: currentUser.jwt, ...res.data }));
+        close();
       })
       .catch((err) => {
         console.log(err);
