@@ -14,6 +14,7 @@ import ReplyInput from "./ReplyInput";
 import { useAppSelector } from "hooks/useRedux";
 import { getCurrentUser } from "features/user/userSlice";
 import { useNavigate } from "react-router-dom";
+import ReactTimeago from "react-timeago";
 
 export interface CommentProps extends BoxProps {
   comment: Comment;
@@ -61,7 +62,7 @@ const CommentListItem = (props: CommentProps) => {
               fontSize={"10px"}
               mb={"3px"}
             >
-              {comment.created_at}
+              <ReactTimeago date={new Date(comment.created_at)} />
             </Typography>
           </Box>
           <Paper sx={{ p: "12px 16px 8px 8px", borderRadius: "16px" }}>

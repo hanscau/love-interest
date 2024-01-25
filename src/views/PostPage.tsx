@@ -26,6 +26,8 @@ import {
   usePostInterest,
   usePostReply,
 } from "hooks/useAPI";
+import moment from "moment";
+import ReactTimeago from "react-timeago";
 
 const PostPage = () => {
   const theme = useTheme();
@@ -136,7 +138,8 @@ const PostPage = () => {
                 {post.title}
               </Typography>
               <Typography fontSize={"12px"} color={theme.palette.black}>
-                {post.topic.topic} | {post.created_at}
+                {post.topic.topic} |{" "}
+                <ReactTimeago date={new Date(post.created_at)} />
               </Typography>
             </Box>
           )
@@ -198,7 +201,8 @@ const PostPage = () => {
                       {post.user.firstName} {post.user.lastName}
                     </Typography>
                     <Typography fontSize={"12px"} color={theme.palette.black}>
-                      Member since {post.user.created_at}
+                      Member since{" "}
+                      {moment(post.user.created_at).format("DD MMMM YYYY")}
                     </Typography>
                   </Box>
                 </Box>

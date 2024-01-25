@@ -73,7 +73,7 @@ const Explore = () => {
       <Header mt={"24px"} mb={"16px"}>
         Recent
       </Header>
-      <Box display="flex" flexDirection="column" gap="4px">
+      <Box display="flex" flexDirection="column-reverse" gap="4px">
         {isPostLoading
           ? [1, 2, 3].map((i) => <PostListItemSkeleton key={i} />)
           : posts &&

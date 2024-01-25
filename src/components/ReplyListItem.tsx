@@ -9,6 +9,7 @@ import {
 import LikeInteract, { ContentType } from "./LikeInteract";
 import Reply from "model/Reply";
 import { useNavigate } from "react-router-dom";
+import ReactTimeago from "react-timeago";
 
 export interface ReplyListItemProps extends BoxProps {
   reply: Reply;
@@ -38,7 +39,7 @@ const ReplyListItem = (props: ReplyListItemProps) => {
             {reply.user.firstName} {reply.user.lastName}
           </Typography>
           <Typography color={theme.palette.black} fontSize={"10px"} mb={"3px"}>
-            {reply.created_at}
+            <ReactTimeago date={new Date(reply.created_at)} />
           </Typography>
         </Box>
         <Paper sx={{ p: "12px 16px 8px 8px", borderRadius: "16px" }}>

@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "hooks/useRedux";
 import { API_URL } from "util/url";
 import { useSearch } from "hooks/useSearch";
+import moment from "moment";
 
 interface UserLite {
   id: number;
@@ -45,8 +46,10 @@ const InterestListItem = ({
         </Typography>
         <Typography fontSize={"12px"}>
           {match
-            ? `Matched on ${user.created_at}`
-            : `Shown Interest on ${user.created_at}`}
+            ? `Matched on ${moment(user.created_at).format("DD MMMM YYYY")}`
+            : `Shown Interest on ${moment(user.created_at).format(
+                "DD MMMM YYYY"
+              )}`}
         </Typography>
       </Box>
       <Box flex={"1 1 auto"}></Box>

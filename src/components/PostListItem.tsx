@@ -3,6 +3,7 @@ import Post, { ContentType } from "model/Post";
 import PostInteract from "./PostInteract";
 import { useNavigate } from "react-router-dom";
 import { Edit } from "@mui/icons-material";
+import TimeAgo from "react-timeago";
 
 interface PostListItemProps {
   post: Post;
@@ -63,7 +64,8 @@ const PostListItem = ({
             mb={"10px"}
             sx={{ color: theme.palette.black }}
           >
-            {post.topic.topic} / {post.created_at}
+            {post.topic.topic} |{" "}
+            <TimeAgo date={new Date(post.created_at).getTime()} />
           </Typography>
           <PostInteract post={post}></PostInteract>
         </Box>
